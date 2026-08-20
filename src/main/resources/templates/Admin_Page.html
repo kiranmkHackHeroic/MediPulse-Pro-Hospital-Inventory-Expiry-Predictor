@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NexusSoft : Cloud Operations & Enterprise Console</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Admin_Page.css}" />
+</head>
+
+<body>
+	<!-- Top Admin Header -->
+	<header class="admin-navbar">
+		<div class="admin-nav-left">
+			<div class="admin-badge-icon">
+				<i class="fa-solid fa-server"></i>
+			</div>
+			<div>
+				<div class="admin-nav-title">NEXUS<span>SOFT</span> OPERATIONS CONSOLE</div>
+				<div class="admin-nav-subtitle">Cloud Orchestration & License Management</div>
+			</div>
+		</div>
+
+		<a th:href="@{/logout}" href="/logout" class="btn-admin-logout">
+			<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Console
+		</a>
+	</header>
+
+	<main class="admin-container">
+		<!-- KPI Stats -->
+		<div class="stats-grid">
+			<div class="stat-card">
+				<div class="stat-info">
+					<h4>Client Accounts</h4>
+					<div class="stat-value" th:text="${users != null ? #lists.size(users) : 0}">0</div>
+				</div>
+				<div class="stat-icon blue">
+					<i class="fa-solid fa-building-user"></i>
+				</div>
+			</div>
+
+			<div class="stat-card">
+				<div class="stat-info">
+					<h4>Software Suites</h4>
+					<div class="stat-value" th:text="${products != null ? #lists.size(products) : 0}">0</div>
+				</div>
+				<div class="stat-icon indigo">
+					<i class="fa-solid fa-cubes"></i>
+				</div>
+			</div>
+
+			<div class="stat-card">
+				<div class="stat-info">
+					<h4>Active Subscriptions</h4>
+					<div class="stat-value" th:text="${orders != null ? #lists.size(orders) : 0}">0</div>
+				</div>
+				<div class="stat-icon cyan">
+					<i class="fa-solid fa-file-invoice-dollar"></i>
+				</div>
+			</div>
+
+			<div class="stat-card">
+				<div class="stat-info">
+					<h4>DevOps Admins</h4>
+					<div class="stat-value" th:text="${admins != null ? #lists.size(admins) : 0}">0</div>
+				</div>
+				<div class="stat-icon purple">
+					<i class="fa-solid fa-user-shield"></i>
+				</div>
+			</div>
+		</div>
+
+		<!-- Navigation Tabs -->
+		<div class="admin-tabs">
+			<button type="button" class="admin-tab-btn active" onclick="showSection('users-section', this)">
+				<i class="fa-solid fa-building-user"></i> Client Accounts
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('products-section', this)">
+				<i class="fa-solid fa-cubes"></i> Software Catalog
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('orders-section', this)">
+				<i class="fa-solid fa-file-invoice"></i> License Invoices
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('admins-section', this)">
+				<i class="fa-solid fa-user-shield"></i> DevOps Admins
+			</button>
+			<button type="button" class="admin-tab-btn" style="background: rgba(99, 102, 241, 0.12); color: #4338ca; border: 1px solid rgba(99, 102, 241, 0.3);" onclick="showSection('ai-section', this); loadAiForecast();">
+				<i class="fa-solid fa-brain"></i> NexusAI ARR Forecast
+			</button>
+		</div>
+
+		<!-- SECTION: Customers / Clients -->
+		<div id="users-section" class="admin-section active">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-building-user"></i> Enterprise Client Directory</h3>
+					<a th:href="@{'/addUser'}" class="btn-add-new">
+						<i class="fa-solid fa-user-plus"></i> Add Client
+					</a>
+				</div>
+				<div class="data-table-wrapper">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Tenant ID</th>
+								<th>Client Organization / Name</th>
+								<th>Corporate Email</th>
+								<th>Contact Phone</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="user : ${users}">
+								<td><span class="pill-id" th:text="'#CLI-' + ${user.u_id}">#1</span></td>
+								<td><strong th:text="${user.uname}">Name</strong></td>
+								<td th:text="${user.uemail}">Email</td>
+								<td th:text="${user.unumber}">Number</td>
+								<td>
+									<div class="action-buttons">
+										<a th:href="@{'/updateUser/' + ${user.u_id}}" class="btn-action-edit" title="Edit Client">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+										<a th:href="@{'/deleteUser/' + ${user.u_id}}" class="btn-action-delete" title="Delete Client" onclick="return confirm('Remove this client account?');">
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</div>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(users)}">
+								<td colspan="5" class="empty-row">No client accounts found.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION: Products / Software Modules -->
+		<div id="products-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-cubes"></i> Software Suites & Modules</h3>
+					<a th:href="@{'/addProduct'}" class="btn-add-new">
+						<i class="fa-solid fa-plus"></i> Add Software Module
+					</a>
+				</div>
+				<div class="data-table-wrapper">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Module ID</th>
+								<th>Software Suite Title</th>
+								<th>Seat Price (INR)</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="product : ${products}">
+								<td><span class="pill-id" th:text="'#MOD-' + ${product.pid}">#1</span></td>
+								<td><strong th:text="${product.pname}">Product Name</strong></td>
+								<td><span class="pill-price" th:text="'₹ ' + ${product.pprice}">₹ 450</span></td>
+								<td>
+									<div class="action-buttons">
+										<a th:href="@{'/updateProduct/' + ${product.pid}}" class="btn-action-edit" title="Edit Module">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+										<a th:href="@{'/deleteProduct/' + ${product.pid}}" class="btn-action-delete" title="Delete Module" onclick="return confirm('Remove this software module from catalog?');">
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</div>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(products)}">
+								<td colspan="4" class="empty-row">No software modules in catalog. Click "Add Software Module" to create one.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION: Orders / Invoices -->
+		<div id="orders-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-file-invoice-dollar"></i> License Subscriptions & Invoices</h3>
+				</div>
+				<div class="data-table-wrapper">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Client</th>
+								<th>Corporate Email</th>
+								<th>Software Module</th>
+								<th>Seat Price</th>
+								<th>Seats Allocated</th>
+								<th>Total Invoiced</th>
+								<th>Provision Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="order : ${orders}">
+								<td><strong th:text="${order.user != null ? order.user.uname : 'Enterprise Guest'}">User</strong></td>
+								<td th:text="${order.user != null ? order.user.uemail : '-'}">Email</td>
+								<td><span style="font-weight: 600;" th:text="${order.oName}">Product</span></td>
+								<td th:text="'₹ ' + ${order.oPrice}">₹ 400</td>
+								<td th:text="${order.oQuantity} + ' Seats'">1 Seats</td>
+								<td><span class="pill-total" th:text="'₹ ' + ${order.totalAmmout}">₹ 400</span></td>
+								<td style="color: #64748b; font-size: 0.85rem;" th:text="${order.orderDate}">Date</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(orders)}">
+								<td colspan="7" class="empty-row">No active software license subscriptions recorded.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION: DevOps Admins -->
+		<div id="admins-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-user-shield"></i> Cloud DevOps Administrators</h3>
+					<a th:href="@{'/addAdmin'}" class="btn-add-new">
+						<i class="fa-solid fa-plus"></i> Add Admin
+					</a>
+				</div>
+				<div class="data-table-wrapper">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Admin ID</th>
+								<th>Admin Name</th>
+								<th>Admin Email</th>
+								<th>Contact Phone</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="admin : ${admins}">
+								<td><span class="pill-id" th:text="'#ADM-' + ${admin.adminId}">#1</span></td>
+								<td><strong th:text="${admin.adminName}">Admin Name</strong></td>
+								<td th:text="${admin.adminEmail}">Email</td>
+								<td th:text="${admin.adminNumber}">Number</td>
+								<td>
+									<div class="action-buttons">
+										<a th:href="@{'/updateAdmin/' + ${admin.adminId}}" class="btn-action-edit" title="Edit Admin">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+										<a th:href="@{'/deleteAdmin/' + ${admin.adminId}}" class="btn-action-delete" title="Delete Admin" onclick="return confirm('Revoke this admin access?');">
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</div>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(admins)}">
+								<td colspan="5" class="empty-row">No administrators registered.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION: NexusAI Predictive Intelligence -->
+		<div id="ai-section" class="admin-section">
+			<div class="section-card" style="border: 2px solid #c7d2fe;">
+				<div class="section-card-header" style="background: linear-gradient(135deg, #1e1b4b, #312e81); color: #ffffff;">
+					<h3 class="section-title" style="color: #ffffff;">
+						<i class="fa-solid fa-wand-magic-sparkles" style="color: #818cf8;"></i>
+						NexusAI Predictive Intelligence & ARR Forecast
+					</h3>
+					<button type="button" class="btn-add-new" onclick="loadAiForecast()" style="background: #4f46e5;">
+						<i class="fa-solid fa-arrows-rotate"></i> Refresh Telemetry
+					</button>
+				</div>
+
+				<div style="padding: 2rem;">
+					<div class="stats-grid" style="margin-bottom: 2rem;">
+						<div class="stat-card" style="border-left: 4px solid #4f46e5;">
+							<div class="stat-info">
+								<h4>Projected 30-Day ARR</h4>
+								<div class="stat-value" id="ai-projected-rev" style="color: #4f46e5;">Calculating...</div>
+							</div>
+							<div class="stat-icon purple"><i class="fa-solid fa-chart-line"></i></div>
+						</div>
+
+						<div class="stat-card" style="border-left: 4px solid #10b981;">
+							<div class="stat-info">
+								<h4>Growth Velocity</h4>
+								<div class="stat-value" id="ai-growth-rate" style="color: #10b981;">+0.0%</div>
+							</div>
+							<div class="stat-icon blue"><i class="fa-solid fa-arrow-trend-up"></i></div>
+						</div>
+
+						<div class="stat-card" style="border-left: 4px solid #f59e0b;">
+							<div class="stat-info">
+								<h4>Top Demand Suite</h4>
+								<div class="stat-value" id="ai-top-module" style="font-size: 1.15rem; color: #b45309; padding-top: 0.5rem;">Analyzing...</div>
+							</div>
+							<div class="stat-icon cyan"><i class="fa-solid fa-fire"></i></div>
+						</div>
+					</div>
+
+					<h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+						<i class="fa-solid fa-lightbulb" style="color: #eab308;"></i> Machine-Generated Strategic Recommendations:
+					</h4>
+
+					<div id="ai-recommendations-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+						<!-- Recommendations injected by JS -->
+						<div style="padding: 1rem 1.25rem; background: #eff6ff; border-radius: 12px; border: 1px solid #bfdbfe; color: #1e40af;">
+							<i class="fa-solid fa-circle-notch fa-spin"></i> Initializing Neural Telemetry Nodes...
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		function showSection(sectionId, btnElement) {
+			document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+			document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+
+			document.getElementById(sectionId).classList.add('active');
+			btnElement.classList.add('active');
+		}
+
+		function loadAiForecast() {
+			fetch('/api/ai/insights')
+				.then(res => res.json())
+				.then(data => {
+					document.getElementById('ai-projected-rev').innerText = data.projectedMonthlyRevenue || '₹ 0.00';
+					document.getElementById('ai-growth-rate').innerText = data.estimatedGrowthPercent || '+0.0%';
+					document.getElementById('ai-top-module').innerText = data.topTrendingModule || 'General Suites';
+
+					const listContainer = document.getElementById('ai-recommendations-list');
+					if (data.recommendations && data.recommendations.length > 0) {
+						listContainer.innerHTML = data.recommendations.map(r => `
+							<div style="padding: 1rem 1.25rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; color: #334155; font-size: 0.95rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 0.75rem;">
+								<i class="fa-solid fa-robot" style="color: #6366f1; margin-top: 0.2rem; font-size: 1.1rem;"></i>
+								<div>${r.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
+							</div>
+						`).join('');
+					}
+				})
+				.catch(err => {
+					console.error("AI Insights error:", err);
+				});
+		}
+	</script>
+</body>
+</html>

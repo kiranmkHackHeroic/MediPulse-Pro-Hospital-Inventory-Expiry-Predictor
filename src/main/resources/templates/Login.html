@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NexusSoft : Client & Admin Login</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Navigation.css}" />
+	<link rel="stylesheet" th:href="@{/css/Login.css}" />
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<main class="auth-wrapper">
+		<div class="auth-card">
+			<div class="auth-header">
+				<div class="auth-header-icon">
+					<i class="fa-solid fa-laptop-code"></i>
+				</div>
+				<h1 class="auth-title">NexusSoft Portal</h1>
+				<p class="auth-subtitle">Sign in to manage cloud subscriptions and licenses</p>
+			</div>
+
+			<div class="auth-body">
+				<!-- Tab Navigation -->
+				<div class="auth-tabs">
+					<button type="button" class="tab-btn active" onclick="switchAuthTab('user')">
+						<i class="fa-solid fa-user-tie"></i> Client Account
+					</button>
+					<button type="button" class="tab-btn" onclick="switchAuthTab('admin')">
+						<i class="fa-solid fa-shield-halved"></i> Cloud Ops Admin
+					</button>
+				</div>
+
+				<!-- Alerts -->
+				<div th:if="${success}" class="alert-message alert-success">
+					<i class="fa-solid fa-circle-check"></i> <span th:text="${success}"></span>
+				</div>
+				<div th:if="${param.logout}" class="alert-message alert-success">
+					<i class="fa-solid fa-circle-check"></i> <span>You have been signed out successfully.</span>
+				</div>
+				<div th:if="${param.unauthorized}" class="alert-message alert-error">
+					<i class="fa-solid fa-lock"></i> <span>Authentication required. Please sign in.</span>
+				</div>
+				<div th:if="${param.forbidden}" class="alert-message alert-error">
+					<i class="fa-solid fa-shield-halved"></i> <span>Access restricted to Cloud Administrators only.</span>
+				</div>
+				<div th:if="${error}" class="alert-message alert-error">
+					<i class="fa-solid fa-triangle-exclamation"></i> <span th:text="${error}"></span>
+				</div>
+				<div th:if="${error2}" class="alert-message alert-error">
+					<i class="fa-solid fa-triangle-exclamation"></i> <span th:text="${error2}"></span>
+				</div>
+
+				<!-- Customer Login Form -->
+				<div id="user-tab" class="tab-panel active">
+					<form th:action="@{/userlogin}" method="get">
+						<div class="form-group">
+							<label class="form-label">Client / Corporate Email</label>
+							<div class="input-with-icon">
+								<i class="fa-solid fa-envelope input-icon"></i>
+								<input type="email" name="userEmail" class="form-control" placeholder="name@company.com" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="form-label">Account Password</label>
+							<div class="input-with-icon">
+								<i class="fa-solid fa-key input-icon"></i>
+								<input type="password" name="userPassword" class="form-control" placeholder="••••••••" required>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-auth-submit">
+							<i class="fa-solid fa-right-to-bracket"></i> Sign In to Client Workspace
+						</button>
+
+						<p class="auth-footer-link">
+							New enterprise client? <a th:href="@{/register}">Create Account</a>
+						</p>
+					</form>
+				</div>
+
+				<!-- Admin Login Form -->
+				<div id="admin-tab" class="tab-panel">
+					<form th:action="@{/adminLogin}" method="get">
+						<div class="form-group">
+							<label class="form-label">Cloud Admin Email</label>
+							<div class="input-with-icon">
+								<i class="fa-solid fa-user-shield input-icon"></i>
+								<input type="email" name="email" class="form-control" placeholder="admin@nexussoft.io" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="form-label">Admin Security Key</label>
+							<div class="input-with-icon">
+								<i class="fa-solid fa-lock input-icon"></i>
+								<input type="password" name="password" class="form-control" placeholder="••••••••" required>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-auth-submit">
+							<i class="fa-solid fa-shield-halved"></i> Access Management Console
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		function switchAuthTab(type) {
+			const buttons = document.querySelectorAll('.tab-btn');
+			const panels = document.querySelectorAll('.tab-panel');
+
+			buttons.forEach(btn => btn.classList.remove('active'));
+			panels.forEach(panel => panel.classList.remove('active'));
+
+			if (type === 'user') {
+				buttons[0].classList.add('active');
+				document.getElementById('user-tab').classList.add('active');
+			} else {
+				buttons[1].classList.add('active');
+				document.getElementById('admin-tab').classList.add('active');
+			}
+		}
+	</script>
+</body>
+</html>

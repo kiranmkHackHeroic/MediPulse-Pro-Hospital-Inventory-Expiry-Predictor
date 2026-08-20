@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NexusSoft : Enterprise Cloud & Software Platform</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Navigation.css}" />
+	<link rel="stylesheet" th:href="@{/css/Home.css}" />
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<!-- Hero Section -->
+	<section class="hero-section">
+		<div class="hero-bg-glow"></div>
+		<div class="hero-overlay"></div>
+
+		<div class="hero-content">
+			<div class="hero-badge">
+				<i class="fa-solid fa-cloud-bolt"></i> Next-Gen Enterprise Software & Cloud Intelligence
+			</div>
+			<h1 class="hero-title">
+				Powering Modern Business, <br />
+				<span>Engineered for Cloud Scale & Speed</span>
+			</h1>
+			<p class="hero-subtitle">
+				Deploy enterprise CRM, ERP modules, analytics engines, and custom SaaS tools with instantaneous provisioning and 99.99% high-availability infrastructure.
+			</p>
+			<div class="hero-buttons">
+				<a href="/products" class="btn-primary-hero">
+					<i class="fa-solid fa-cubes"></i> Browse Software Suites
+				</a>
+				<a href="/login" class="btn-secondary-hero">
+					<i class="fa-solid fa-terminal"></i> Client Portal Login
+				</a>
+			</div>
+
+			<div class="hero-stats">
+				<div class="stat-item">
+					<span class="stat-number">99.99%</span>
+					<span class="stat-label">Cloud Uptime SLA</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-number">10k+</span>
+					<span class="stat-label">Active Deployments</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-number">250+</span>
+					<span class="stat-label">Prebuilt API Modules</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-number">SOC 2</span>
+					<span class="stat-label">Type II Certified</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features / Value Prop -->
+	<section class="features-section">
+		<div class="section-header">
+			<span class="section-tag">Enterprise Architecture</span>
+			<h2 class="section-title">Built for Modern Engineering Teams</h2>
+		</div>
+
+		<div class="features-grid">
+			<div class="feature-card">
+				<div class="feature-icon-wrapper">
+					<i class="fa-solid fa-server"></i>
+				</div>
+				<h3>Cloud-Native Scalability</h3>
+				<p>Seamlessly scale microservices with zero-downtime rolling updates, automated load balancing, and multi-region failover.</p>
+			</div>
+
+			<div class="feature-card">
+				<div class="feature-icon-wrapper">
+					<i class="fa-solid fa-shield-halved"></i>
+				</div>
+				<h3>Military-Grade Security</h3>
+				<p>End-to-end AES-256 encryption, role-based access control (RBAC), and automated compliance monitoring out of the box.</p>
+			</div>
+
+			<div class="feature-card">
+				<div class="feature-icon-wrapper">
+					<i class="fa-solid fa-bolt"></i>
+				</div>
+				<h3>Instant License Provisioning</h3>
+				<p>Acquire seats, deploy API keys, and spin up workspace instances in seconds with automated pipeline provisioning.</p>
+			</div>
+
+			<div class="feature-card">
+				<div class="feature-icon-wrapper">
+					<i class="fa-solid fa-chart-line"></i>
+				</div>
+				<h3>Real-Time Telemetry</h3>
+				<p>Deep observability into system metrics, user consumption, compute utilization, and automated audit trail analytics.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="main-footer">
+		<div class="footer-container">
+			<div class="footer-brand">
+				<h2><i class="fa-solid fa-laptop-code"></i> NEXUS<span>SOFT</span></h2>
+				<p>Empowering digital transformation through high-performance enterprise software, scalable cloud architecture, and intelligent automation suites.</p>
+			</div>
+			<div class="footer-col">
+				<h4>Solutions</h4>
+				<ul>
+					<li><a href="/products">Enterprise ERP Suite</a></li>
+					<li><a href="/products">Cloud Analytics Engine</a></li>
+					<li><a href="/products">Developer API Hub</a></li>
+					<li><a href="/products">Security Shield Platform</a></li>
+				</ul>
+			</div>
+			<div class="footer-col">
+				<h4>Client Portal</h4>
+				<ul>
+					<li><a href="/login">Customer Login</a></li>
+					<li><a href="/login">Administrator Console</a></li>
+					<li><a href="/register">Create Enterprise Account</a></li>
+				</ul>
+			</div>
+			<div class="footer-col">
+				<h4>Global Support</h4>
+				<ul>
+					<li><a href="tel:+919740374098"><i class="fa-solid fa-phone"></i> +91 9740374098</a></li>
+					<li><a href="mailto:support@nexussoft.com"><i class="fa-solid fa-envelope"></i> enterprise@nexussoft.io</a></li>
+					<li><span><i class="fa-solid fa-location-dot"></i> Tech Park, Karnataka, India</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>© 2026 NexusSoft Platform Solutions Inc. All Rights Reserved.</p>
+		</div>
+	</footer>
+</body>
+</html>

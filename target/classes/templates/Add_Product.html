@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin : Add Software Suite</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Add_Product.css}" />
+</head>
+
+<body>
+	<div class="form-modal-card">
+		<div class="form-modal-header">
+			<div class="form-modal-icon"><i class="fa-solid fa-cube"></i></div>
+			<h2 class="form-modal-title">Add Software Suite</h2>
+		</div>
+
+		<div class="form-modal-body">
+			<form th:action="@{/product/adding}" method="post">
+				<div class="form-group">
+					<label>Software Module / Suite Name</label>
+					<input type="text" name="pname" placeholder="e.g. Enterprise Cloud ERP, AI Vision API" required />
+				</div>
+
+				<div class="form-group">
+					<label>Price per User Seat / License (INR)</label>
+					<input type="number" step="0.01" name="pprice" placeholder="e.g. 4999.00" required />
+				</div>
+
+				<div class="btn-group">
+					<a th:href="@{/admin/services}" class="btn-cancel-form">Cancel</a>
+					<button type="submit" class="btn-submit-form">
+						<i class="fa-solid fa-plus"></i> Publish Module
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

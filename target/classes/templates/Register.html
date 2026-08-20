@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NexusSoft : Create Enterprise Client Account</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Navigation.css}" />
+	<link rel="stylesheet" th:href="@{/css/Register.css}" />
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<main class="register-wrapper">
+		<div class="register-card">
+			<div class="register-header">
+				<div class="register-icon">
+					<i class="fa-solid fa-user-plus"></i>
+				</div>
+				<h1 class="register-title">Create Client Account</h1>
+				<p class="register-subtitle">Join NexusSoft to deploy software licenses and cloud instances</p>
+			</div>
+
+			<div class="register-body">
+				<div th:if="${error}" class="alert-error">
+					<i class="fa-solid fa-triangle-exclamation"></i> <span th:text="${error}"></span>
+				</div>
+
+				<form th:action="@{/registerUser}" method="post">
+					<div class="form-group">
+						<label class="form-label">Full Name / Organization Lead</label>
+						<div class="input-with-icon">
+							<i class="fa-solid fa-user input-icon"></i>
+							<input type="text" name="uname" class="form-control" placeholder="e.g. Kiran M K" required />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Corporate Email Address</label>
+						<div class="input-with-icon">
+							<i class="fa-solid fa-envelope input-icon"></i>
+							<input type="email" name="uemail" class="form-control" placeholder="lead@enterprise.com" required />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Phone Number</label>
+						<div class="input-with-icon">
+							<i class="fa-solid fa-phone input-icon"></i>
+							<input type="tel" name="unumber" class="form-control" placeholder="10-digit contact number" pattern="[0-9]{10}" required />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Account Security Password</label>
+						<div class="input-with-icon">
+							<i class="fa-solid fa-lock input-icon"></i>
+							<input type="password" name="upassword" class="form-control" placeholder="4 to 8 characters" required minlength="4" maxlength="8" />
+						</div>
+					</div>
+
+					<button type="submit" class="btn-register-submit">
+						<i class="fa-solid fa-check"></i> Complete Registration
+					</button>
+
+					<p class="auth-footer-link">
+						Already have an account? <a th:href="@{/login}">Sign In here</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

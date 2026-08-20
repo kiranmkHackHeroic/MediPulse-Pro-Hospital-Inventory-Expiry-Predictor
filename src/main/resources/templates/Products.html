@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NexusSoft : Software Suites & Cloud Licenses</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/Navigation.css}" />
+	<link rel="stylesheet" th:href="@{/css/Products.css}" />
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<main class="products-container">
+		<div class="products-header">
+			<span class="products-tag">Enterprise Catalog</span>
+			<h1 class="products-title">Software Suites & Cloud Licenses</h1>
+			<p class="products-subtitle">Explore our enterprise SaaS products, developer API modules, and specialized workflow intelligence platforms.</p>
+		</div>
+
+		<div class="products-grid">
+			<div class="product-card" th:each="s : ${products}">
+				<div class="product-banner-header">
+					<div class="product-icon-large">
+						<i class="fa-solid fa-layer-group"></i>
+					</div>
+					<span class="product-badge">v4.5 Enterprise</span>
+				</div>
+				<div class="product-body">
+					<div class="product-rating">
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<span style="color: #64748b; font-size: 0.8rem; margin-left: 0.25rem;">(4.9 / 5.0)</span>
+					</div>
+					<h3 class="product-name" th:text="${s.pname}">Enterprise Cloud Platform</h3>
+					<p class="product-desc">Full access to cloud microservices, automated CI/CD pipeline connectors, and 24/7 dedicated engineering support.</p>
+					
+					<div class="product-meta">
+						<div class="price-box">
+							<span class="price-label">Price / License Seat</span>
+							<span class="price-value" th:text="'₹ ' + ${s.pprice}">₹ 4,999</span>
+						</div>
+						<a href="/login" class="btn-buy-product">
+							<i class="fa-solid fa-key"></i> Get License
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Empty State -->
+			<div class="empty-state" th:if="${#lists.isEmpty(products)}">
+				<i class="fa-solid fa-server"></i>
+				<h3>No Software Solutions Listed</h3>
+				<p>Product catalog is currently undergoing automated deployment. Please check back shortly!</p>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

@@ -1,0 +1,90 @@
+.location-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 3.5rem 2rem 5rem;
+	width: 100%;
+}
+
+.location-header {
+	text-align: center;
+	margin-bottom: 3rem;
+}
+
+.location-tag {
+	color: #2563eb;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 0.85rem;
+	letter-spacing: 1.5px;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.location-title {
+	font-size: 2.5rem;
+	font-weight: 800;
+	color: #0f172a;
+	letter-spacing: -0.5px;
+}
+
+.map-card {
+	background: #ffffff;
+	border-radius: 24px;
+	overflow: hidden;
+	box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08);
+	border: 1px solid #e2e8f0;
+}
+
+.map-frame-wrapper {
+	position: relative;
+	width: 100%;
+	height: 480px;
+}
+
+.map-frame-wrapper iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+.location-details-bar {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 1.5rem;
+	padding: 2rem;
+	background: #ffffff;
+	border-top: 1px solid #f1f5f9;
+}
+
+.loc-badge {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.loc-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: rgba(37, 99, 235, 0.1);
+	color: #2563eb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem;
+}
+
+.loc-text h4 {
+	font-size: 0.8rem;
+	color: #94a3b8;
+	text-transform: uppercase;
+	font-weight: 700;
+	margin-bottom: 0.2rem;
+}
+
+.loc-text p {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #1e293b;
+	margin: 0;
+}

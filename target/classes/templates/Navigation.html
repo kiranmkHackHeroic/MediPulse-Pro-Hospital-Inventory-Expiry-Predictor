@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusSoft : Enterprise Cloud & Software Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/Navigation.css}">
+    <link rel="stylesheet" th:href="@{/css/AiWidget.css}">
+</head>
+<body>
+    <nav th:fragment="navbar()" class="navbar-container">
+        <div class="navbar">
+            <a href="/home" class="nav-brand">
+                <div class="brand-icon-box">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">NEXUS<span>SOFT</span></span>
+                    <span class="brand-tag">Cloud & Enterprise SaaS</span>
+                </div>
+            </a>
+
+            <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="/home" class="nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="/products" class="nav-link"><i class="fa-solid fa-cubes"></i> Software Solutions</a></li>
+                <li><a href="/about" class="nav-link"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                <li><a href="/location" class="nav-link"><i class="fa-solid fa-location-dot"></i> Tech Centers</a></li>
+                <li class="nav-actions">
+                    <a href="/register" class="btn-nav-register"><i class="fa-solid fa-user-plus"></i> Sign Up</a>
+                    <a href="/login" class="btn-nav-login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Client Login</a>
+                </li>
+            </ul>
+        </div>
+        <link rel="stylesheet" th:href="@{/css/AiWidget.css}">
+        <script th:src="@{/JavaScript/AiWidget.js}"></script>
+    </nav>
+</body>
+</html>
