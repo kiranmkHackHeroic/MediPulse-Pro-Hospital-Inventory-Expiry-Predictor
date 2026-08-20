@@ -4,27 +4,28 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
 
 import com.business.entities.Product;
 import com.business.repositories.ProductRepository;
-@Component
+
+@Service
 public class ProductServices 
 {
 	@Autowired
 	private ProductRepository productRepository;
 
 	//add Product
-	public void addProduct(Product p)
+	public void addProduct(@NonNull Product p)
 	{
 		this.productRepository.save(p);
 	}
 
-
 	//getAll products
 	public List<Product> getAllProducts()
 	{
-		List<Product> products=(List<Product>)this.productRepository.findAll();
+		List<Product> products = (List<Product>) this.productRepository.findAll();
 		return products;
 	}
 
@@ -32,22 +33,20 @@ public class ProductServices
 	public Product getProduct(int id)
 	{
 		Optional<Product> optional = this.productRepository.findById(id);
-		Product product=optional.get();
-		return product;
+		return optional.orElse(null);
 	}
 
 	//update Product
-	public void updateproduct(Product p,int id)
+	public void updateproduct(@NonNull Product p, int id)
 	{
 		p.setPid(id);
 		Optional<Product> optional = this.productRepository.findById(id);
-		Product prod=optional.get();
-
-		if(prod.getPid()==id)
+		if (optional.isPresent())
 		{
 			this.productRepository.save(p);				
 		}
 	}
+	
 	//delete product
 	public void deleteProduct(int id)
 	{
@@ -57,13 +56,7 @@ public class ProductServices
 	//Get Product By Name
 	public Product getProductByName(String name)
 	{
-		
-		Product product= this.productRepository.findByPname(name);
-		if(product!=null)
-		{
-			return product;
-		}
-		return null;
-	
+		Product product = this.productRepository.findByPname(name);
+		return product;
 	}
 }

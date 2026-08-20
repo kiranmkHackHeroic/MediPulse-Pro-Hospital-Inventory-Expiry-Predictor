@@ -4,9 +4,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -42,26 +40,23 @@ public class JwtUtils {
 	}
 
 	public String extractUsername(String token) {
-		return extractClaim(token, Claims::getSubject);
+		Claims claims = extractAllClaims(token);
+		return claims != null ? claims.getSubject() : null;
 	}
 
 	public String extractRole(String token) {
 		Claims claims = extractAllClaims(token);
-		return (String) claims.get("role");
+		return claims != null ? (String) claims.get("role") : null;
 	}
 
 	public String extractDisplayName(String token) {
 		Claims claims = extractAllClaims(token);
-		return (String) claims.get("name");
+		return claims != null ? (String) claims.get("name") : null;
 	}
 
 	public Date extractExpiration(String token) {
-		return extractClaim(token, Claims::getExpiration);
-	}
-
-	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-		final Claims claims = extractAllClaims(token);
-		return claimsResolver.apply(claims);
+		Claims claims = extractAllClaims(token);
+		return claims != null ? claims.getExpiration() : null;
 	}
 
 	private Claims extractAllClaims(String token) {
@@ -74,7 +69,8 @@ public class JwtUtils {
 
 	public boolean isTokenExpired(String token) {
 		try {
-			return extractExpiration(token).before(new Date());
+			Date exp = extractExpiration(token);
+			return exp != null && exp.before(new Date());
 		} catch (Exception e) {
 			return true;
 		}
@@ -83,7 +79,7 @@ public class JwtUtils {
 	public boolean validateToken(String token, String username) {
 		try {
 			final String tokenUsername = extractUsername(token);
-			return (tokenUsername.equals(username) && !isTokenExpired(token));
+			return (tokenUsername != null && tokenUsername.equals(username) && !isTokenExpired(token));
 		} catch (Exception e) {
 			return false;
 		}

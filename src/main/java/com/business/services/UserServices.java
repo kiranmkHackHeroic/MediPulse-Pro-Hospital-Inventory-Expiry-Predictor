@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class UserServices
 	}
 	
 	//Update
-	public void updateUser(User user, int id)
+	public void updateUser(@NonNull User user, int id)
 	{
 		user.setU_id(id);
 		// Check if password needs hashing
@@ -58,7 +59,7 @@ public class UserServices
 	}
 
 	//Add User
-	public void addUser(User user)
+	public void addUser(@NonNull User user)
 	{
 		// Hash password with BCrypt
 		if (user.getUpassword() != null && !user.getUpassword().startsWith("$2a$")) {

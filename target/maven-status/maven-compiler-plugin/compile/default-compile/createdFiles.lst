@@ -16,7 +16,9 @@ com/business/services/UserServices.class
 com/business/entities/Admin.class
 com/business/repositories/OrderRepository.class
 com/business/security/JwtAuthenticationFilter.class
+com/business/ai/AiService.class
 com/business/security/CustomUserDetailsService.class
+com/business/ai/AiController.class
 com/business/controllers/HomeController.class
 com/business/controllers/OrderController.class
 com/business/services/AdminServices.class

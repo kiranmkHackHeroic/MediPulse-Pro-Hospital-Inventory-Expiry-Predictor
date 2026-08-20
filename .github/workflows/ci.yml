@@ -1,0 +1,29 @@
+name: NexusSoft CI/CD Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    name: Build, Test & Verify Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Step 1: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: ☕ Step 2: Set up Java 17 (Temurin)
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 🔨 Step 3: Compile and Package with Maven
+        run: ./mvnw clean package -DskipTests=false
+
+      - name: 🐳 Step 4: Verify Docker Build
+        run: docker build -t nexussoft-app:latest .

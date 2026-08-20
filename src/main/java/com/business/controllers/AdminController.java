@@ -176,7 +176,7 @@ public class AdminController {
 
 	// Handling AddAdmin
 	@PostMapping("/addingAdmin")
-	public String addAdmin(@ModelAttribute Admin admin) {
+	public String addAdmin(@ModelAttribute @org.springframework.lang.NonNull Admin admin) {
 		this.adminServices.addAdmin(admin);
 		return "redirect:/admin/services";
 	}
@@ -191,7 +191,7 @@ public class AdminController {
 
 	// Handling Update Page
 	@GetMapping("/updatingAdmin/{id}")
-	public String updateAdmin(@ModelAttribute Admin admin, @PathVariable("id") int id) {
+	public String updateAdmin(@ModelAttribute @org.springframework.lang.NonNull Admin admin, @PathVariable("id") int id) {
 		this.adminServices.update(admin, id);
 		return "redirect:/admin/services";
 	}

@@ -17,7 +17,7 @@ public class UserController
 	private UserServices services;
 
 	@PostMapping("/addingUser")
-	public String  addUser(@ModelAttribute User user)
+	public String  addUser(@ModelAttribute @org.springframework.lang.NonNull User user)
 	{
 		System.out.println(user);
 		this.services.addUser(user);
@@ -25,7 +25,7 @@ public class UserController
 	}
 
 	@GetMapping("/updatingUser/{id}")
-	public String updateUser(@ModelAttribute User user, @PathVariable("id") int id)
+	public String updateUser(@ModelAttribute @org.springframework.lang.NonNull User user, @PathVariable("id") int id)
 	{
 		this.services.updateUser(user, id);
 		return "redirect:/admin/services";

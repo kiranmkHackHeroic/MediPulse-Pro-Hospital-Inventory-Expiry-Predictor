@@ -1,15 +1,11 @@
 package com.business.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import com.business.entities.Product;
 import com.business.services.ProductServices;
@@ -22,7 +18,7 @@ public class ProductController
 
 	//	AddProduct
 	@PostMapping("/addingProduct")
-	public String addProduct(@ModelAttribute Product product)
+	public String addProduct(@ModelAttribute @org.springframework.lang.NonNull Product product)
 	{
 
 		this.productServices.addProduct(product);
@@ -31,7 +27,7 @@ public class ProductController
 
 	//	UpdateProduct
 	@GetMapping("/updatingProduct/{productId}")
-	public String updateProduct(@ModelAttribute Product product,@PathVariable("productId") int id)
+	public String updateProduct(@ModelAttribute @org.springframework.lang.NonNull Product product,@PathVariable("productId") int id)
 	{
 
 		this.productServices.updateproduct(product, id);

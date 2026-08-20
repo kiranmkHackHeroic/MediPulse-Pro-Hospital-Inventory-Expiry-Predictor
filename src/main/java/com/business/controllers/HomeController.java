@@ -61,7 +61,7 @@ public class HomeController
 	}
 
 	@PostMapping("/registerUser")
-	public String registerUser(@ModelAttribute User user, Model model)
+	public String registerUser(@ModelAttribute @org.springframework.lang.NonNull User user, Model model)
 	{
 		// Check if email already exists
 		User existing = this.productServices != null ? null : null;

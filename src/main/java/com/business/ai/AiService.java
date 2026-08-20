@@ -176,7 +176,6 @@ public class AiService {
 		Map<String, Object> insights = new HashMap<>();
 
 		List<Orders> allOrders = (List<Orders>) orderRepository.findAll();
-		List<Product> allProducts = (List<Product>) productRepository.findAll();
 		long userCount = userRepository.count();
 
 		double totalHistoricalRevenue = 0.0;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class AdminServices
 	}
 
 	//Update Admin
-	public void update(Admin admin, int id)
+	public void update(@NonNull Admin admin, int id)
 	{
 		admin.setAdminId(id);
 		if (admin.getAdminPassword() != null && !admin.getAdminPassword().startsWith("$2a$")) {
@@ -50,7 +51,7 @@ public class AdminServices
 	}
 	
 	//add Admin
-	public void addAdmin(Admin admin)
+	public void addAdmin(@NonNull Admin admin)
 	{
 		if (admin.getAdminPassword() != null && !admin.getAdminPassword().startsWith("$2a$")) {
 			admin.setAdminPassword(passwordEncoder.encode(admin.getAdminPassword()));
