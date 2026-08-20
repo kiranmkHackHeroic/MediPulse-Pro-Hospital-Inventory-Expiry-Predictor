@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql-db:
+    image: mysql:8.0
+    container_name: nexussoft-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Root1234
+      MYSQL_DATABASE: businessproject
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # NexusSoft Spring Boot Application Service
+  app:
+    build: .
+    container_name: nexussoft-backend
+    restart: always
+    ports:
+      - "2330:2330"
+    environment:
+      PORT: 2330
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/businessproject
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Root1234
+    depends_on:
+      - mysql-db
+
+volumes:
+  mysql-data:
