@@ -11,9 +11,9 @@
 	</parent>
 	<groupId>com.business</groupId>
 	<artifactId>BusinessProject</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>BusinessProject</name>
-	<description>Building Business related project using spring boot</description>
+	<version>1.0.0</version>
+	<name>MediPulse Pro</name>
+	<description>B2B Hospital Inventory &amp; Consumable Expiry Predictor Platform</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
