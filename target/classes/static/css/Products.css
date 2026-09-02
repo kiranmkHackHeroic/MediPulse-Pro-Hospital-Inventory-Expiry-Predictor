@@ -8,33 +8,45 @@
 .products-header {
 	text-align: center;
 	margin-bottom: 3.5rem;
+	background: linear-gradient(135deg, rgba(8, 20, 32, 0.88) 0%, rgba(12, 74, 110, 0.82) 100%),
+	            url('/Images/hospital-bg.jpg') center center / cover no-repeat;
+	padding: 3.5rem 2rem;
+	border-radius: 24px;
+	color: #ffffff;
+	box-shadow: 0 15px 35px -5px rgba(2, 132, 199, 0.15);
+	border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .products-tag {
-	color: #0284c7;
+	color: #38bdf8;
 	font-family: 'Outfit', sans-serif;
 	font-weight: 700;
 	text-transform: uppercase;
 	font-size: 0.85rem;
 	letter-spacing: 1.5px;
-	display: block;
-	margin-bottom: 0.5rem;
+	display: inline-block;
+	margin-bottom: 0.75rem;
+	background: rgba(2, 132, 199, 0.3) !important;
+	border: 1px solid rgba(56, 189, 248, 0.4) !important;
+	padding: 0.35rem 1rem;
+	border-radius: 50px;
 }
 
 .products-title {
 	font-family: 'Outfit', sans-serif;
 	font-size: 2.5rem;
 	font-weight: 800;
-	color: #0f172a;
+	color: #ffffff;
 	letter-spacing: -0.5px;
 	margin-bottom: 0.75rem;
 }
 
 .products-subtitle {
-	color: #475569;
+	color: #e0f2fe;
 	font-size: 1.05rem;
-	max-width: 650px;
+	max-width: 750px;
 	margin: 0 auto;
+	line-height: 1.6;
 }
 
 .products-grid {
