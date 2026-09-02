@@ -1,6 +1,9 @@
 # 🏥 MediPulse Pro : B2B Hospital Inventory & Consumable Expiry Predictor
 
 <p align="center">
+  <a href="https://github.com/kiranmkHackHeroic/MediPulse-Pro-Hospital-Inventory-Expiry-Predictor">
+    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
+  </a>
   <img src="https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
   <img src="https://img.shields.io/badge/Spring%20Boot-3.1.3-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot 3" />
   <img src="https://img.shields.io/badge/Spring%20Security-6.0-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" alt="Spring Security 6" />
@@ -8,6 +11,10 @@
   <img src="https://img.shields.io/badge/MySQL%208-Aiven%20Cloud%20(SSL)-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="Aiven MySQL" />
   <img src="https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/Render-Live%20Cloud-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render" />
+</p>
+
+<p align="center">
+  <b>🔗 GitHub Repository:</b> <a href="https://github.com/kiranmkHackHeroic/MediPulse-Pro-Hospital-Inventory-Expiry-Predictor">https://github.com/kiranmkHackHeroic/MediPulse-Pro-Hospital-Inventory-Expiry-Predictor</a>
 </p>
 
 ---

@@ -1,4 +1,5 @@
 # =======================================================
+# GitHub: https://github.com/kiranmkHackHeroic/MediPulse-Pro-Hospital-Inventory-Expiry-Predictor
 # Stage 1: Build JAR inside a Maven container
 # =======================================================
 FROM maven:3.9.4-eclipse-temurin-17 AS builder
