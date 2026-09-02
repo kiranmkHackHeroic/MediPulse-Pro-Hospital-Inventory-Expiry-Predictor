@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: medipulse-pro
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 10000
