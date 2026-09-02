@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NexusSoft : Software Suites & Cloud Licenses</title>
+	<title>MediPulse Pro : Hospital Master Formulary</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,38 +17,39 @@
 
 	<main class="products-container">
 		<div class="products-header">
-			<span class="products-tag">Enterprise Catalog</span>
-			<h1 class="products-title">Software Suites & Cloud Licenses</h1>
-			<p class="products-subtitle">Explore our enterprise SaaS products, developer API modules, and specialized workflow intelligence platforms.</p>
+			<span class="products-tag" style="background: rgba(2, 132, 199, 0.1); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.2);">Master Clinical Formulary</span>
+			<h1 class="products-title">Pharmaceuticals & Surgical Consumables</h1>
+			<p class="products-subtitle">Real-time GxP catalog of approved implants, critical care medications, and sterile supplies with FEFO batch governance and ROP thresholds.</p>
 		</div>
 
 		<div class="products-grid">
 			<div class="product-card" th:each="s : ${products}">
-				<div class="product-banner-header">
-					<div class="product-icon-large">
-						<i class="fa-solid fa-layer-group"></i>
+				<div class="product-banner-header" style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.1), rgba(14, 165, 233, 0.05));">
+					<div class="product-icon-large" style="background: #0284c7; color: white;">
+						<i class="fa-solid fa-prescription-bottle-medical"></i>
 					</div>
-					<span class="product-badge">v4.5 Enterprise</span>
+					<span class="product-badge" style="background: #0284c7;" th:text="${s.category}">Critical Care</span>
 				</div>
 				<div class="product-body">
-					<div class="product-rating">
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<span style="color: #64748b; font-size: 0.8rem; margin-left: 0.25rem;">(4.9 / 5.0)</span>
+					<div class="product-rating" style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+						<span style="background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;" th:text="${s.dosageForm}">Vial</span>
+						<span style="background: #f1f5f9; color: #475569; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem;" th:text="${s.storageTemp}">Cold Chain</span>
 					</div>
-					<h3 class="product-name" th:text="${s.pname}">Enterprise Cloud Platform</h3>
-					<p class="product-desc">Full access to cloud microservices, automated CI/CD pipeline connectors, and 24/7 dedicated engineering support.</p>
+					<h3 class="product-name" th:text="${s.pname}">Meropenem 1g IV Infusion</h3>
+					<p class="product-desc" th:text="${s.pdescription}">Clinical consumable profile.</p>
 					
+					<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.6rem 0.8rem; margin: 0.8rem 0; font-size: 0.8rem; color: #475569; display: flex; justify-content: space-between;">
+						<span><strong>Safety Buffer:</strong> <span th:text="${s.minSafetyStock} + ' units'">30</span></span>
+						<span><strong>Reorder Point (ROP):</strong> <span th:text="${s.reorderPoint} + ' units'">60</span></span>
+					</div>
+
 					<div class="product-meta">
 						<div class="price-box">
-							<span class="price-label">Price / License Seat</span>
-							<span class="price-value" th:text="'₹ ' + ${s.pprice}">₹ 4,999</span>
+							<span class="price-label">Acquisition Cost / Unit</span>
+							<span class="price-value" style="color: #0284c7;" th:text="'₹ ' + ${s.pprice}">₹ 850</span>
 						</div>
-						<a href="/login" class="btn-buy-product">
-							<i class="fa-solid fa-key"></i> Get License
+						<a href="/login" class="btn-buy-product" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+							<i class="fa-solid fa-file-signature"></i> Ward Indent
 						</a>
 					</div>
 				</div>
@@ -56,9 +57,9 @@
 
 			<!-- Empty State -->
 			<div class="empty-state" th:if="${#lists.isEmpty(products)}">
-				<i class="fa-solid fa-server"></i>
-				<h3>No Software Solutions Listed</h3>
-				<p>Product catalog is currently undergoing automated deployment. Please check back shortly!</p>
+				<i class="fa-solid fa-hospital"></i>
+				<h3>No Formulary Items Registered</h3>
+				<p>Central Pharmacy catalog is being synchronized from the ERP. Please check back shortly!</p>
 			</div>
 		</div>
 	</main>

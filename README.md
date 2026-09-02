@@ -1,53 +1,46 @@
-# 🌐 NexusSoft : Enterprise Cloud SaaS & License Orchestration Platform
+# 🏥 MediPulse Pro : Enterprise Hospital Inventory & Consumable Expiry Predictor
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Java-17%20%2F%2025-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
+  <img src="https://img.shields.io/badge/Java-17%20%2F%2025-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17/25" />
   <img src="https://img.shields.io/badge/Spring%20Boot-3.1.3-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot 3" />
   <img src="https://img.shields.io/badge/Spring%20Security-6.0-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" alt="Spring Security 6" />
   <img src="https://img.shields.io/badge/JWT-HS256%20Stateless-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
   <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
-  <img src="https://img.shields.io/badge/AI-NexusAI%20Copilot-8A2BE2?style=for-the-badge&logo=openai&logoColor=white" alt="NexusAI" />
+  <img src="https://img.shields.io/badge/AI-MediPulse%20Copilot-0284C7?style=for-the-badge&logo=openai&logoColor=white" alt="MediPulse AI" />
 </p>
 
 ---
 
-## 📌 Abstract & Overview
+## 📌 Abstract & Clinical Problem
 
-**NexusSoft** is a full-stack enterprise cloud application engineered to distribute software suites, provision SaaS licenses, manage multi-tenant billing, and deliver automated business intelligence.
+Hospitals routinely tie up millions in dead stock while simultaneously facing life-threatening stockouts of acute pharmaceuticals, surgical implants, and anesthesia agents. 
 
-Built on **Spring Boot 3.1.3, Spring Security 6, and MySQL**, the platform implements **stateless JSON Web Token (JWT) cryptographic authentication with BCrypt hashing** and integrates **NexusAI Copilot** for conversational cloud advisory and predictive revenue telemetry.
+**MediPulse Pro** is an enterprise hospital inventory and consumable replenishment platform engineered to achieve:
+1. **Zero Clinical Stockouts (99.98% Availability SLA)** through statistical Reorder Point ($ROP$) and Safety Stock ($SS$) variance math.
+2. **Zero Expired Consumable Waste (> 40% Loss Reduction)** via algorithmic **First-Expire-First-Out (FEFO)** batch allocation, real-time **Expiry Radar** telemetry, and automated **Inter-Ward Stock Transfers**.
 
 ---
 
-## ✨ Key Platform Features
+## 🧮 Mathematical & Supply-Chain Algorithms
 
-### 1. 🛡️ Enterprise Security & Stateless JWT Authentication
-- **HMAC-SHA256 (HS256) Signed Tokens**: Secure token generation containing subject claims, display names, and authority roles (`ROLE_USER`, `ROLE_ADMIN`).
-- **Dual-Channel Delivery**:
-  - `HttpOnly` Secure Cookie (`jwt_token`) for seamless server-side page navigation without XSS vulnerability.
-  - `Authorization: Bearer <token>` for REST API clients and microservices.
-- **BCrypt Password Encryption**: All tenant and admin passwords in MySQL are hashed with 10 adaptive salt rounds (`$2a$10$...`).
-- **Role-Based Access Control (RBAC)**: Strict separation between **Enterprise Client Workspaces** and **Cloud Ops Admin Consoles**.
+### 1. Reorder Point ($ROP$) with Lead-Time Variability
+$$ROP = (d \times L) + SS$$
+- $d$: Average daily consumable burn rate in units.
+- $L$: Supplier delivery lead time in days.
+- $SS$: Safety Stock Buffer:
+$$SS = Z \times \sqrt{L \times \sigma_d^2 + d^2 \times \sigma_L^2}$$
+*(Evaluated at $Z = 2.33$ for a 99% clinical uptime SLA).*
 
-### 2. 🤖 NexusAI Intelligent Copilot & Predictive Telemetry
-- **Floating Interactive Assistant Widget**: Available across client pages with typing animation and quick prompt chips.
-- **Dynamic Cost & Volume Discount Calculator**: Computes per-seat software pricing and automatically applies team (10%) and enterprise (20%) discount tiers.
-- **Architecture Advisory**: Recommends customized software bundles based on business vertical (Fintech, Startup, Healthcare, Enterprise).
-- **Admin ARR Forecasting**: Analyzes order velocity to project 30-day recurring revenue, identifies top-performing suites, and generates strategic recommendations.
+### 2. Economic Order Quantity ($EOQ$)
+$$EOQ = \sqrt{\frac{2 \times D \times S}{H}}$$
+- $D$: Annual consumable demand.
+- $S$: Fixed administrative cost per purchase order.
+- $H$: Holding cost per unit per year (cold-chain refrigeration, insurance, obsolescence).
 
-### 3. 📦 Software Catalog & License Provisioning
-- **Per-Seat License Model**: Dynamic license quantity calculation for software suites:
-  - 🌐 *Nexus Cloud ERP Suite*
-  - 🤖 *AI Vision & Analytics Engine*
-  - 🛡️ *CyberShield Enterprise Security*
-  - ⚡ *DevOps CI/CD Automation Hub*
-  - 📊 *OmniChannel CRM & Helpdesk*
-  - 🔗 *Microservices API Gateway Pro*
-- **Client Workspace**: Instant catalog search, live seat allocation, and active subscription invoice ledger.
-
-### 4. 🎛️ Cloud Operations Admin Console
-- **Executive KPI Dashboard**: Real-time counters for *Client Accounts*, *Catalog Suites*, *Active Subscriptions*, and *DevOps Admins*.
-- **Modular Data Tables**: Full CRUD capabilities for enterprise tenants, catalog modules, invoices, and system administrators.
+### 3. Expiry Risk Score Index (ERSI) & FEFO Dispatch
+Each inbound batch is assigned an ERSI score ($0 - 100$):
+$$ERSI = \max\left(0, \; 100 \times \left(1 - \frac{\text{Days to Expiry}}{\text{Batch Quantity} / d}\right)\right)$$
+If $ERSI > 75$, the consumable cannot be consumed at the current department's velocity before expiration. The platform automatically triggers an **Inter-Ward Stock Transfer** to high-velocity units (e.g. from Ortho Ward to Emergency Trauma OT).
 
 ---
 
@@ -56,150 +49,131 @@ Built on **Spring Boot 3.1.3, Spring Security 6, and MySQL**, the platform imple
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        PRESENTATION LAYER                              │
-│   Thymeleaf 3 + HTML5 + CSS3 (Glassmorphism, Mobile Responsive)        │
-│   NexusAI Copilot UI Widget + Chart.js Telemetry UI                    │
+│   Thymeleaf 3 + Glassmorphism CSS3 + MediPulse AI Widget               │
+│   Clinical Expiry Radar + Stockout Alert Tables + Modal Workflows      │
 └───────────────────────────────────┬────────────────────────────────────┘
-                                    │ HTTP/HTTPS (Cookie + Bearer Token)
+                                    │ HTTP/HTTPS (JWT Cookie + Bearer)
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                    SECURITY & INTERCEPTOR LAYER                        │
 │   JwtAuthenticationFilter (HS256) ──► Spring Security 6 (Stateless)    │
-│   BCrypt Password Encryption (10 Salt Rounds) ──► RBAC Engine          │
+│   BCrypt Password Hashing (10 Rounds) ──► Hospital RBAC                │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│                        CONTROLLER & API LAYER                          │
-│   HomeController ──► AdminController ──► AiController                 │
+│                        CONTROLLER & REST LAYER                         │
+│   HospitalInventoryController ──► AdminController ──► AiController     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│                         SERVICE / BUSINESS LOGIC                       │
-│   AiService ──► ProductServices ──► OrderServices ──► UserServices     │
+│                       CLINICAL SERVICE & AI LAYER                      │
+│   HospitalInventoryService ──► AiService (Clinical Copilot)            │
+│   FEFO Dispatch Engine ──► ROP & EOQ Calculator ──► Inter-Ward Swap    │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                     DATA ACCESS LAYER (Hibernate JPA)                  │
-│   ProductRepository ──► OrderRepository ──► UserRepository             │
+│   HospitalDepartmentRepository ──► InventoryBatchRepository            │
+│   RequisitionRepository ──► ProductRepository ──► UserRepository       │
 └───────────────────────────────────┬────────────────────────────────────┘
-                                    │ JDBC / HikariCP Pool
+                                    │ MySQL 8 / HikariCP Pool
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                       PERSISTENCE LAYER (MySQL 8)                      │
-│   Tables: `user`, `admin`, `product`, `orders`                         │
+│   Tables: hospital_department, inventory_batch, requisitions,         │
+│           requisition_items, product, user, admin                      │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🛠️ Technology Stack
-
-| Layer | Technology |
-|---|---|
-| **Backend Framework** | Spring Boot 3.1.3 (Java 17 / 25) |
-| **Security & Auth** | Spring Security 6.0, JJWT (Java JWT 0.11.5), BCrypt |
-| **Artificial Intelligence** | NexusAI Natural Language Engine, Rule & Graph Heuristics |
-| **ORM / Data Access** | Spring Data JPA, Hibernate ORM, HikariCP |
-| **Database** | MySQL 8.0 / MySQL 9.0 |
-| **Frontend / UI** | Thymeleaf 3, Vanilla CSS3 (Custom Design System), JavaScript, FontAwesome 6 |
-| **Build & Tooling** | Maven 3.9.4, Maven Wrapper (`mvnw`), Docker |
-
----
-
-## 🚀 Getting Started & Local Installation
-
-### 1. Prerequisites
-- **JDK 17** or higher installed (`java -version`)
-- **MySQL 8.0+** running locally on port `3306`
-
-### 2. Clone the Repository
-```bash
-git clone https://github.com/<your-username>/NexusSoft.git
-cd NexusSoft
-```
-
-### 3. Configure Database Credentials
-Edit `src/main/resources/application.properties`:
-```properties
-server.port=2330
-spring.datasource.url=jdbc:mysql://localhost:3306/businessproject
-spring.datasource.username=root
-spring.datasource.password=Root1234
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.hibernate.ddl-auto=update
-```
-
-### 4. Build and Run Application
-```bash
-# Using Maven Wrapper
-./mvnw clean package -DskipTests
-./mvnw spring-boot:run
-```
-
-The application will start on: **[http://localhost:2330/](http://localhost:2330/)**
-
----
-
 ## 🧪 Demo Credentials & Key Routes
 
-| Portal / Feature | URL Route | Demo Credentials | Access Role |
+| Portal / Feature | URL Route | Demo Credentials | Role |
 |---|---|---|---|
-| 🌐 **Public SaaS Landing** | `/` | Open Access | Public |
-| 📦 **Software Solutions** | `/products` | Open Access | Public |
-| 🤖 **NexusAI Assistant** | Floating Widget | Open Access | Public / User |
-| 🔐 **Sign In / Sign Up** | `/login`, `/register` | Open Access | Public |
-| 💻 **Client Workspace** | `/product/back` | Register or Login | `ROLE_USER` |
-| 🎛️ **Cloud Ops Console** | `/admin/services` | `kiranmk628@gmail.com` / `1234` | `ROLE_ADMIN` |
+| 🌐 **Public Overview & SLA** | `/` | Open Access | Public |
+| 💊 **Medical Master Formulary** | `/products` | Open Access | Public / Clinical |
+| 🤖 **MediPulse AI Assistant** | Floating Widget | Open Access | All |
+| 🔐 **Staff Login** | `/login` | `kiranmk628@gmail.com` / `1234` | `ROLE_ADMIN` |
+| 🎛️ **Clinical Command Console** | `/admin/services` | Login required | `ROLE_ADMIN` |
 
 ---
 
 ## 📡 REST API Reference
 
-### 1. AI Chat Copilot
+### 1. Expiry Radar & Capital at Risk Telemetry
 ```http
-POST /api/ai/chat
+GET /api/hospital/expiry-radar?daysThreshold=60
+```
+**Response:**
+```json
+{
+  "criticalCount": 2,
+  "nearExpiryCount": 1,
+  "totalCapitalAtRisk": 64050.0,
+  "criticalBatches": [
+    {
+      "batchId": 1,
+      "batchNumber": "MERO-2026-B88",
+      "itemName": "Meropenem 1g IV Infusion",
+      "department": "Central Hospital Pharmacy",
+      "daysLeft": 18,
+      "quantity": 37,
+      "capitalAtRisk": 31450.0
+    }
+  ],
+  "transferRecommendations": [
+    {
+      "batchNumber": "MERO-2026-B88",
+      "itemName": "Meropenem 1g IV Infusion",
+      "fromDepartment": "Central Hospital Pharmacy",
+      "toDepartment": "Emergency OT / ICU",
+      "reason": "Batch expires in 18 days. High daily patient throughput in Emergency OT can consume this before expiry."
+    }
+  ]
+}
+```
+
+### 2. Stockout & ROP Diagnostics
+```http
+GET /api/hospital/stockout-alerts
+```
+
+### 3. Inter-Ward Stock Transfer
+```http
+POST /api/hospital/transfer
 Content-Type: application/json
 
 {
-  "message": "Estimate cost for 50 seats of Cloud ERP"
-}
-```
-**Response:**
-```json
-{
-  "reply": "### 💰 Cost Estimation for Nexus Cloud ERP Suite...",
-  "suggestions": [
-    "Deploy Nexus Cloud ERP Suite",
-    "Compare with other suites"
-  ]
+  "batchId": 1,
+  "targetDepartmentId": 1,
+  "quantity": 5
 }
 ```
 
-### 2. Admin AI ARR Forecast & Insights
+### 4. Register Inbound Batch Lot
 ```http
-GET /api/ai/insights
-```
-**Response:**
-```json
+POST /api/hospital/batch/add
+Content-Type: application/json
+
 {
-  "projectedMonthlyRevenue": "₹ 48600.00",
-  "estimatedGrowthPercent": "+24.0%",
-  "topTrendingModule": "Nexus Cloud ERP Suite",
-  "activeTenants": 1,
-  "recommendations": [
-    "High demand detected for Nexus Cloud ERP Suite — bundle with CyberShield Security for a 15% ARR boost."
-  ]
+  "productId": 1,
+  "departmentId": 3,
+  "batchNumber": "MERO-2026-B99",
+  "expiryDate": "2027-05-15",
+  "quantity": 50,
+  "purchaseCost": 850.00
 }
 ```
 
 ---
 
-## ☁️ Deployment & CI/CD Pipeline
+## 🚀 Running Locally
 
-The project includes ready-to-deploy configuration for cloud platforms (Render, Railway, AWS EC2):
+```bash
+# 1. Compile Java sources
+./mvnw clean compile -DskipTests
 
-1. **Docker Container**: Build with `docker build -t nexussoft .` and run with `docker run -p 2330:2330 nexussoft`.
-2. **GitHub Actions CI/CD**: Automatic build, unit testing, and Docker packaging on every `git push origin main`.
-3. **Webhook Continuous Deployment**: Zero-downtime auto-redeploy when new commits arrive.
+# 2. Start Application
+./mvnw spring-boot:run
+```
 
----
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+App runs on: **[http://localhost:2330/](http://localhost:2330/)**

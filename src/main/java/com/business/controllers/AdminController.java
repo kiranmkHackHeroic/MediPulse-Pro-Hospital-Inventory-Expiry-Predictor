@@ -52,6 +52,18 @@ public class AdminController {
 	@Autowired
 	private JwtUtils jwtUtils;
 
+	@Autowired
+	private com.business.services.HospitalInventoryService hospitalInventoryService;
+
+	@Autowired
+	private com.business.repositories.HospitalDepartmentRepository departmentRepository;
+
+	@Autowired
+	private com.business.repositories.InventoryBatchRepository batchRepository;
+
+	@Autowired
+	private com.business.repositories.RequisitionRepository requisitionRepository;
+
 	// Helper to safely get current authenticated User from Spring Security Principal
 	private User getCurrentUser(Principal principal) {
 		if (principal != null) {
@@ -82,7 +94,7 @@ public class AdminController {
 
 			return "redirect:/admin/services";
 		} else {
-			model.addAttribute("error", "Invalid admin email or security key");
+			model.addAttribute("error", "Invalid hospital admin email or clinical security passcode.");
 			return "Login";
 		}
 	}
@@ -95,7 +107,7 @@ public class AdminController {
 
 		if (services.validateLoginCredentials(email, password)) {
 			User user = this.services.getUserByEmail(email);
-			String displayName = user != null ? user.getUname() : "Client";
+			String displayName = user != null ? user.getUname() : "Ward Staff";
 
 			// Generate JWT Token
 			String token = jwtUtils.generateToken(email, "ROLE_USER", displayName);
@@ -109,7 +121,7 @@ public class AdminController {
 
 			return "redirect:/product/back";
 		} else {
-			model.addAttribute("error2", "Invalid client email or password");
+			model.addAttribute("error2", "Invalid clinical staff email or password.");
 			return "Login";
 		}
 	}
@@ -124,17 +136,14 @@ public class AdminController {
 		cookie.setMaxAge(0);
 		response.addCookie(cookie);
 
-		// Clear security context
-		SecurityContextHolder.clearContext();
-
 		return "redirect:/login?logout=true";
 	}
 
-	// Searching Product By Name in Client Portal
+	// Searching Product By Name in Client Workspace
 	@PostMapping("/product/search")
-	public String searchHandler(@RequestParam("productName") String name, Principal principal, Model model) {
-		User user = getCurrentUser(principal);
+	public String searchProduct(@RequestParam("productName") String name, Principal principal, Model model) {
 		Product product = this.productServices.getProductByName(name);
+		User user = getCurrentUser(principal);
 
 		if (user != null) {
 			List<Orders> orders = this.orderServices.getOrdersForUser(user);
@@ -143,7 +152,7 @@ public class AdminController {
 		}
 
 		if (product == null) {
-			model.addAttribute("message", "SORRY...! Software Module Unavailable");
+			model.addAttribute("message", "Item not found in Master Formulary. Contact Central Pharmacy.");
 			model.addAttribute("product", null);
 			return "BuyProduct";
 		}
@@ -164,6 +173,13 @@ public class AdminController {
 		model.addAttribute("admins", admins);
 		model.addAttribute("products", products);
 		model.addAttribute("orders", orders);
+
+		// Hospital Domain Models
+		model.addAttribute("departments", this.departmentRepository.findAll());
+		model.addAttribute("batches", this.batchRepository.findAllOrderedByExpiry());
+		model.addAttribute("expiryRadar", this.hospitalInventoryService.getExpiryRadar(60));
+		model.addAttribute("stockoutAlerts", this.hospitalInventoryService.getStockoutAlerts());
+		model.addAttribute("requisitions", this.requisitionRepository.findAllByOrderByCreatedAtDesc());
 
 		return "Admin_Page";
 	}

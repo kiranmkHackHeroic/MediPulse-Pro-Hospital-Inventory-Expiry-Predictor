@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NexusSoft : Create Enterprise Client Account</title>
+	<title>MediPulse Pro : Clinical Ward Onboarding</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/Navigation.css}" />
 	<link rel="stylesheet" th:href="@{/css/Register.css}" />
@@ -19,10 +19,10 @@
 		<div class="register-card">
 			<div class="register-header">
 				<div class="register-icon">
-					<i class="fa-solid fa-user-plus"></i>
+					<i class="fa-solid fa-hospital-user"></i>
 				</div>
-				<h1 class="register-title">Create Client Account</h1>
-				<p class="register-subtitle">Join NexusSoft to deploy software licenses and cloud instances</p>
+				<h1 class="register-title">Clinical Ward Onboarding</h1>
+				<p class="register-subtitle">Register hospital department access for automated FEFO replenishment</p>
 			</div>
 
 			<div class="register-body">
@@ -32,31 +32,31 @@
 
 				<form th:action="@{/registerUser}" method="post">
 					<div class="form-group">
-						<label class="form-label">Full Name / Organization Lead</label>
+						<label class="form-label">Staff Member Name / Ward Incharge</label>
 						<div class="input-with-icon">
-							<i class="fa-solid fa-user input-icon"></i>
-							<input type="text" name="uname" class="form-control" placeholder="e.g. Kiran M K" required />
+							<i class="fa-solid fa-user-doctor input-icon"></i>
+							<input type="text" name="uname" class="form-control" placeholder="e.g. Nurse Rekha / Dr. Anand" required />
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="form-label">Corporate Email Address</label>
+						<label class="form-label">Official Hospital Email Address</label>
 						<div class="input-with-icon">
 							<i class="fa-solid fa-envelope input-icon"></i>
-							<input type="email" name="uemail" class="form-control" placeholder="lead@enterprise.com" required />
+							<input type="email" name="uemail" class="form-control" placeholder="staff@hospital.org" required />
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="form-label">Phone Number</label>
+						<label class="form-label">Ward Extension / Phone Number</label>
 						<div class="input-with-icon">
 							<i class="fa-solid fa-phone input-icon"></i>
-							<input type="tel" name="unumber" class="form-control" placeholder="10-digit contact number" pattern="[0-9]{10}" required />
+							<input type="tel" name="unumber" class="form-control" placeholder="10-digit mobile / intercom" pattern="[0-9]{10}" required />
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="form-label">Account Security Password</label>
+						<label class="form-label">Clinical Security Passcode</label>
 						<div class="input-with-icon">
 							<i class="fa-solid fa-lock input-icon"></i>
 							<input type="password" name="upassword" class="form-control" placeholder="4 to 8 characters" required minlength="4" maxlength="8" />
@@ -64,11 +64,11 @@
 					</div>
 
 					<button type="submit" class="btn-register-submit">
-						<i class="fa-solid fa-check"></i> Complete Registration
+						<i class="fa-solid fa-check-double"></i> Authorize Ward Account
 					</button>
 
 					<p class="auth-footer-link">
-						Already have an account? <a th:href="@{/login}">Sign In here</a>
+						Already registered? <a th:href="@{/login}">Sign In to Ward Portal</a>
 					</p>
 				</form>
 			</div>

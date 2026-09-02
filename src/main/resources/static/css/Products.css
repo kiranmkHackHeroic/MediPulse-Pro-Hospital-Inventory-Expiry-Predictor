@@ -11,7 +11,8 @@
 }
 
 .products-tag {
-	color: #2563eb;
+	color: #0284c7;
+	font-family: 'Outfit', sans-serif;
 	font-weight: 700;
 	text-transform: uppercase;
 	font-size: 0.85rem;
@@ -21,6 +22,7 @@
 }
 
 .products-title {
+	font-family: 'Outfit', sans-serif;
 	font-size: 2.5rem;
 	font-weight: 800;
 	color: #0f172a;
@@ -29,7 +31,7 @@
 }
 
 .products-subtitle {
-	color: #64748b;
+	color: #475569;
 	font-size: 1.05rem;
 	max-width: 650px;
 	margin: 0 auto;
@@ -37,7 +39,7 @@
 
 .products-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 	gap: 2.25rem;
 }
 
@@ -45,8 +47,8 @@
 	background: #ffffff;
 	border-radius: 20px;
 	overflow: hidden;
-	border: 1px solid #e2e8f0;
-	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+	border: 1px solid #e0f2fe;
+	box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.06);
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	display: flex;
 	flex-direction: column;
@@ -55,37 +57,39 @@
 
 .product-card:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 20px 35px -10px rgba(37, 99, 235, 0.15);
-	border-color: #93c5fd;
+	box-shadow: 0 20px 35px -10px rgba(13, 148, 136, 0.16);
+	border-color: #38bdf8;
 }
 
 .product-banner-header {
-	background: linear-gradient(135deg, #1e293b, #0f172a);
+	background: linear-gradient(135deg, #0c4a6e, #0369a1);
 	padding: 2rem 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .product-icon-large {
 	width: 52px;
 	height: 52px;
 	border-radius: 14px;
-	background: linear-gradient(135deg, #2563eb, #6366f1);
+	background: linear-gradient(135deg, #0284c7, #0d9488);
 	color: #ffffff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 1.5rem;
-	box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+	box-shadow: 0 6px 15px rgba(2, 132, 199, 0.4);
 }
 
 .product-badge {
-	background: rgba(37, 99, 235, 0.2);
-	border: 1px solid rgba(96, 165, 250, 0.4);
-	color: #93c5fd;
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	color: #ffffff;
+	font-family: 'Outfit', sans-serif;
 	font-size: 0.75rem;
 	font-weight: 700;
 	padding: 0.35rem 0.85rem;
@@ -98,7 +102,7 @@
 	padding: 1.75rem 1.5rem;
 	display: flex;
 	flex-direction: column;
-	flex-grow: 1;
+	flex: 1;
 }
 
 .product-rating {
@@ -111,8 +115,6 @@
 }
 
 .product-name {
-	font-size: 1.3rem;
-	font-weight: 800;
 	color: #0f172a;
 	margin-bottom: 0.5rem;
 }

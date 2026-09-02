@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NexusSoft : Client Workspace & Subscriptions</title>
+	<title>MediPulse Pro : Clinical Ward Workspace & Indents</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/BuyProduct.css}" />
 	<link rel="stylesheet" th:href="@{/css/AiWidget.css}" />
@@ -16,16 +16,16 @@
 	<!-- Top Customer Navigation -->
 	<header class="portal-nav">
 		<a href="/home" class="portal-brand">
-			<div class="portal-brand-logo">
-				<i class="fa-solid fa-laptop-code"></i>
+			<div class="portal-brand-logo" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+				<i class="fa-solid fa-heart-pulse"></i>
 			</div>
-			<span class="portal-brand-title">NEXUS<span>SOFT</span> CLIENT WORKSPACE</span>
+			<span class="portal-brand-title">MEDIPULSE<span>PRO</span> CLINICAL WORKSPACE</span>
 		</a>
 
 		<div class="portal-user-badge">
 			<div class="user-pill">
-				<div class="user-avatar"><i class="fa-solid fa-user-check"></i></div>
-				<span>Welcome, <strong th:text="${name != null ? name : 'Enterprise Client'}">Client</strong></span>
+				<div class="user-avatar" style="background: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-user-doctor"></i></div>
+				<span>Ward Staff: <strong th:text="${name != null ? name : 'Clinical Ward Staff'}">Staff</strong></span>
 			</div>
 			<a th:href="@{/logout}" href="/logout" class="btn-portal-logout">
 				<i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
@@ -38,14 +38,14 @@
 			<!-- Product Search Card -->
 			<div class="portal-card">
 				<div class="portal-card-header">
-					<div class="portal-card-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-					<h2 class="portal-card-title">Search Software & SaaS Modules</h2>
+					<div class="portal-card-icon" style="color: #0284c7; background: #e0f2fe;"><i class="fa-solid fa-magnifying-glass"></i></div>
+					<h2 class="portal-card-title">Search Clinical Consumables & Pharmaceuticals</h2>
 				</div>
 
 				<form th:action="@{/product/search}" method="post" class="search-form">
-					<input type="text" name="productName" class="search-input" required placeholder="Type software module name (e.g. ERP Suite, Cloud CRM, AI Analytics)...">
-					<button type="submit" class="btn-search">
-						<i class="fa-solid fa-search"></i> Search Catalog
+					<input type="text" name="productName" class="search-input" required placeholder="Type medicine or implant (e.g. Meropenem, Propofol, Knee Implant, Sevoflurane)...">
+					<button type="submit" class="btn-search" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+						<i class="fa-solid fa-search"></i> Search Formulary
 					</button>
 				</form>
 
@@ -54,33 +54,33 @@
 				</div>
 			</div>
 
-			<!-- Product Order Form (Shows when a software module is found) -->
-			<div th:if="${product != null}" class="portal-card" style="border: 2px solid #93c5fd; background: #eff6ff;">
+			<!-- Product Order Form (Shows when a consumable is found) -->
+			<div th:if="${product != null}" class="portal-card" style="border: 2px solid #bae6fd; background: #f0f9ff;">
 				<div class="portal-card-header">
-					<div class="portal-card-icon" style="background: #dbeafe; color: #1e40af;"><i class="fa-solid fa-key"></i></div>
-					<h2 class="portal-card-title" style="color: #1e3a8a;">Module Available - Provision Licenses</h2>
+					<div class="portal-card-icon" style="background: #bae6fd; color: #0369a1;"><i class="fa-solid fa-pills"></i></div>
+					<h2 class="portal-card-title" style="color: #0369a1;">Formulary Item Available - Requisition Ward Stock</h2>
 				</div>
 
 				<form th:action="@{/product/order}" th:object="${product}" method="post">
 					<div class="order-form-grid">
 						<div class="order-field">
-							<label>Software Suite</label>
+							<label>Clinical Consumable</label>
 							<input type="text" name="oName" th:value="${product.pname}" readonly style="font-weight: 700;" />
 						</div>
 
 						<div class="order-field">
-							<label>Price per User Seat (INR)</label>
-							<input type="text" name="oPrice" th:value="${product.pprice}" readonly style="font-weight: 700; color: #1e40af;" />
+							<label>Unit Acquisition Cost (INR)</label>
+							<input type="text" name="oPrice" th:value="${product.pprice}" readonly style="font-weight: 700; color: #0284c7;" />
 						</div>
 
 						<div class="order-field">
-							<label>License Seats (Min: 1 seat)</label>
-							<input type="number" name="oQuantity" min="1" value="1" placeholder="Number of Seats" required />
+							<label>Requisition Quantity Units</label>
+							<input type="number" name="oQuantity" min="1" value="10" placeholder="Number of Units" required />
 						</div>
 					</div>
 
-					<button type="submit" class="btn-order-now">
-						<i class="fa-solid fa-bolt"></i> Confirm & Deploy Licenses
+					<button type="submit" class="btn-order-now" style="background: linear-gradient(135deg, #0284c7, #0d9488);">
+						<i class="fa-solid fa-truck-ramp-box"></i> Confirm & Dispatch Ward Indent
 					</button>
 				</form>
 			</div>
@@ -88,40 +88,43 @@
 			<!-- Order History Card -->
 			<div class="portal-card">
 				<div class="portal-card-header">
-					<div class="portal-card-icon"><i class="fa-solid fa-receipt"></i></div>
-					<h2 class="portal-card-title">Provisioned Licenses & Active Subscriptions</h2>
+					<div class="portal-card-icon" style="color: #0284c7; background: #e0f2fe;"><i class="fa-solid fa-receipt"></i></div>
+					<h2 class="portal-card-title">Ward Requisitions & Fulfilled Replenishments</h2>
 				</div>
 
 				<div class="table-responsive" th:if="${orders != null and not #lists.isEmpty(orders)}">
 					<table class="orders-table">
 						<thead>
 							<tr>
-								<th>Software Suite</th>
-								<th>Price / Seat</th>
-								<th>Seats Provisioned</th>
-								<th>Total Billing</th>
-								<th>Activation Date</th>
+								<th>Consumable Item</th>
+								<th>Price / Unit</th>
+								<th>Quantity</th>
+								<th>Indent Date</th>
+								<th>Total Amount</th>
+								<th>Status</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="order : ${orders}">
-								<td><strong th:text="${order.oName}">Software Suite</strong></td>
-								<td class="badge-price" th:text="'₹ ' + ${order.oPrice}">₹ 4,999</td>
-								<td th:text="${order.oQuantity} + ' Seats'">1 Seats</td>
-								<td><span class="badge-total" th:text="'₹ ' + ${order.totalAmmout}">₹ 4,999</span></td>
-								<td class="badge-date" th:text="${order.orderDate}">Date</td>
+								<td><strong th:text="${order.oName}">Meropenem 1g</strong></td>
+								<td th:text="'₹ ' + ${order.oPrice}">₹ 850.00</td>
+								<td><span class="badge-qty" th:text="${order.oQuantity} + ' Units'">10 Units</span></td>
+								<td th:text="${order.orderDate}">2026-09-02</td>
+								<td><strong style="color: #0284c7;" th:text="'₹ ' + ${order.totalAmmout}">₹ 8,500.00</strong></td>
+								<td><span class="badge-status" style="background: #ecfdf5; color: #059669;"><i class="fa-solid fa-check"></i> DISPATCHED</span></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
-				<div th:if="${orders == null or #lists.isEmpty(orders)}" style="text-align: center; padding: 2rem 1rem; color: #64748b;">
-					<i class="fa-solid fa-cubes" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0.5rem; display: block;"></i>
-					<p>No active software licenses provisioned for this account yet. Search the catalog above to acquire your first software module!</p>
+				<div class="empty-orders" th:if="${orders == null or #lists.isEmpty(orders)}">
+					<i class="fa-solid fa-box-open" style="color: #94a3b8;"></i>
+					<p>No active requisitions for this ward. Use the search bar above to raise emergency supplies.</p>
 				</div>
 			</div>
 		</div>
 	</main>
+
 	<script th:src="@{/JavaScript/AiWidget.js}"></script>
 </body>
 </html>

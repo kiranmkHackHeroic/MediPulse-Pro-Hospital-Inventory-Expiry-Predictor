@@ -17,7 +17,7 @@ public class ProductController
 	private ProductServices productServices;
 
 	//	AddProduct
-	@PostMapping("/addingProduct")
+	@PostMapping({"/addingProduct", "/product/adding"})
 	public String addProduct(@ModelAttribute @org.springframework.lang.NonNull Product product)
 	{
 
@@ -26,8 +26,8 @@ public class ProductController
 	}
 
 	//	UpdateProduct
-	@GetMapping("/updatingProduct/{productId}")
-	public String updateProduct(@ModelAttribute @org.springframework.lang.NonNull Product product,@PathVariable("productId") int id)
+	@PostMapping({"/updatingProduct/{productId}", "/product/updatingProduct/{productId}"})
+	public String updateProduct(@ModelAttribute @org.springframework.lang.NonNull Product product, @PathVariable("productId") int id)
 	{
 
 		this.productServices.updateproduct(product, id);

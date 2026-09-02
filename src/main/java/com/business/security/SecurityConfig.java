@@ -53,7 +53,7 @@ public class SecurityConfig {
 				// Static resources
 				.requestMatchers("/css/**", "/Images/**", "/Videos/**", "/JavaScript/**", "/favicon.ico").permitAll()
 				// Public web pages & Auth endpoints
-				.requestMatchers("/", "/home", "/products", "/about", "/location", "/login", "/register", "/registerUser", "/userlogin", "/adminLogin", "/logout", "/api/ai/**").permitAll()
+				.requestMatchers("/", "/home", "/products", "/about", "/location", "/login", "/register", "/registerUser", "/userlogin", "/adminLogin", "/logout", "/api/ai/**", "/api/hospital/**").permitAll()
 				// Admin endpoints require ROLE_ADMIN
 				.requestMatchers("/admin/**", "/addAdmin", "/addingAdmin", "/updateAdmin/**", "/deleteAdmin/**",
 				                 "/addProduct", "/addUser", "/product/adding", "/product/updatingProduct/**",

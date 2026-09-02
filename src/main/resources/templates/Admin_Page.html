@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NexusSoft : Cloud Operations & Enterprise Console</title>
+	<title>MediPulse Pro : Hospital Operations & Expiry Radar Console</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,122 +15,156 @@
 	<!-- Top Admin Header -->
 	<header class="admin-navbar">
 		<div class="admin-nav-left">
-			<div class="admin-badge-icon">
-				<i class="fa-solid fa-server"></i>
+			<div class="admin-badge-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+				<i class="fa-solid fa-heart-pulse"></i>
 			</div>
 			<div>
-				<div class="admin-nav-title">NEXUS<span>SOFT</span> OPERATIONS CONSOLE</div>
-				<div class="admin-nav-subtitle">Cloud Orchestration & License Management</div>
+				<div class="admin-nav-title">MEDIPULSE<span>PRO</span> CLINICAL COMMAND CONSOLE</div>
+				<div class="admin-nav-subtitle">Hospital Supply Chain, FEFO Expiry Radar & Stockout Prevention</div>
 			</div>
 		</div>
 
-		<a th:href="@{/logout}" href="/logout" class="btn-admin-logout">
-			<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Console
-		</a>
+		<div style="display: flex; gap: 0.75rem; align-items: center;">
+			<a href="/products" class="btn-admin-logout" style="background: rgba(2, 132, 199, 0.1); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3);">
+				<i class="fa-solid fa-pills"></i> Formulary View
+			</a>
+			<a th:href="@{/logout}" href="/logout" class="btn-admin-logout">
+				<i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Console
+			</a>
+		</div>
 	</header>
 
 	<main class="admin-container">
 		<!-- KPI Stats -->
 		<div class="stats-grid">
-			<div class="stat-card">
+			<div class="stat-card" style="border-left: 4px solid #ef4444;">
 				<div class="stat-info">
-					<h4>Client Accounts</h4>
-					<div class="stat-value" th:text="${users != null ? #lists.size(users) : 0}">0</div>
+					<h4>Capital at Risk (< 60D)</h4>
+					<div class="stat-value" style="color: #ef4444;" th:text="'₹ ' + ${expiryRadar != null ? expiryRadar.totalCapitalAtRisk : '0.00'}">₹ 0.00</div>
 				</div>
-				<div class="stat-icon blue">
-					<i class="fa-solid fa-building-user"></i>
+				<div class="stat-icon red" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+					<i class="fa-solid fa-triangle-exclamation"></i>
 				</div>
 			</div>
 
-			<div class="stat-card">
+			<div class="stat-card" style="border-left: 4px solid #f59e0b;">
 				<div class="stat-info">
-					<h4>Software Suites</h4>
-					<div class="stat-value" th:text="${products != null ? #lists.size(products) : 0}">0</div>
+					<h4>Critical Expiries (< 30D)</h4>
+					<div class="stat-value" style="color: #f59e0b;" th:text="${expiryRadar != null ? expiryRadar.criticalCount : 0} + ' Batches'">0 Batches</div>
 				</div>
-				<div class="stat-icon indigo">
-					<i class="fa-solid fa-cubes"></i>
+				<div class="stat-icon yellow" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+					<i class="fa-solid fa-clock-rotate-left"></i>
 				</div>
 			</div>
 
-			<div class="stat-card">
+			<div class="stat-card" style="border-left: 4px solid #10b981;">
 				<div class="stat-info">
-					<h4>Active Subscriptions</h4>
-					<div class="stat-value" th:text="${orders != null ? #lists.size(orders) : 0}">0</div>
+					<h4>Zero Stockout SLA</h4>
+					<div class="stat-value" style="color: #10b981;">99.8%</div>
 				</div>
-				<div class="stat-icon cyan">
-					<i class="fa-solid fa-file-invoice-dollar"></i>
+				<div class="stat-icon green" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+					<i class="fa-solid fa-shield-halved"></i>
 				</div>
 			</div>
 
-			<div class="stat-card">
+			<div class="stat-card" style="border-left: 4px solid #0284c7;">
 				<div class="stat-info">
-					<h4>DevOps Admins</h4>
-					<div class="stat-value" th:text="${admins != null ? #lists.size(admins) : 0}">0</div>
+					<h4>Active Batches Tracked</h4>
+					<div class="stat-value" style="color: #0284c7;" th:text="${batches != null ? #lists.size(batches) : 0}">0</div>
 				</div>
-				<div class="stat-icon purple">
-					<i class="fa-solid fa-user-shield"></i>
+				<div class="stat-icon blue" style="background: rgba(2, 132, 199, 0.1); color: #0284c7;">
+					<i class="fa-solid fa-boxes-stacked"></i>
 				</div>
 			</div>
 		</div>
 
 		<!-- Navigation Tabs -->
 		<div class="admin-tabs">
-			<button type="button" class="admin-tab-btn active" onclick="showSection('users-section', this)">
-				<i class="fa-solid fa-building-user"></i> Client Accounts
+			<button type="button" class="admin-tab-btn active" onclick="showSection('radar-section', this)">
+				<i class="fa-solid fa-radar"></i> Expiry Radar & FEFO
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('stockout-section', this)">
+				<i class="fa-solid fa-triangle-exclamation"></i> Stockout & ROP Alerts
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('batches-section', this)">
+				<i class="fa-solid fa-barcode"></i> All Batch Lots
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('requisitions-section', this)">
+				<i class="fa-solid fa-file-medical"></i> Ward Requisitions
+			</button>
+			<button type="button" class="admin-tab-btn" onclick="showSection('departments-section', this)">
+				<i class="fa-solid fa-hospital-user"></i> Hospital Wards
 			</button>
 			<button type="button" class="admin-tab-btn" onclick="showSection('products-section', this)">
-				<i class="fa-solid fa-cubes"></i> Software Catalog
+				<i class="fa-solid fa-pills"></i> Master Formulary
 			</button>
-			<button type="button" class="admin-tab-btn" onclick="showSection('orders-section', this)">
-				<i class="fa-solid fa-file-invoice"></i> License Invoices
-			</button>
-			<button type="button" class="admin-tab-btn" onclick="showSection('admins-section', this)">
-				<i class="fa-solid fa-user-shield"></i> DevOps Admins
-			</button>
-			<button type="button" class="admin-tab-btn" style="background: rgba(99, 102, 241, 0.12); color: #4338ca; border: 1px solid rgba(99, 102, 241, 0.3);" onclick="showSection('ai-section', this); loadAiForecast();">
-				<i class="fa-solid fa-brain"></i> NexusAI ARR Forecast
+			<button type="button" class="admin-tab-btn" style="background: rgba(2, 132, 199, 0.12); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3);" onclick="showSection('ai-section', this); loadAiForecast();">
+				<i class="fa-solid fa-wand-magic-sparkles"></i> MediPulse AI Copilot
 			</button>
 		</div>
 
-		<!-- SECTION: Customers / Clients -->
-		<div id="users-section" class="admin-section active">
-			<div class="section-card">
+		<!-- SECTION 1: Expiry Radar & FEFO -->
+		<div id="radar-section" class="admin-section active">
+			<div class="section-card" style="border-top: 4px solid #ef4444;">
 				<div class="section-card-header">
-					<h3 class="section-title"><i class="fa-solid fa-building-user"></i> Enterprise Client Directory</h3>
-					<a th:href="@{'/addUser'}" class="btn-add-new">
-						<i class="fa-solid fa-user-plus"></i> Add Client
-					</a>
+					<h3 class="section-title">
+						<i class="fa-solid fa-radar" style="color: #ef4444;"></i>
+						Near-Expiry Consumables & FEFO Prioritization Radar
+					</h3>
+					<span style="font-size: 0.85rem; color: #64748b;">Algorithmic FEFO (First Expire, First Out)</span>
 				</div>
-				<div class="data-table-wrapper">
-					<table class="data-table">
+
+				<!-- AI Inter-Ward Recommendations Banner -->
+				<div style="padding: 1rem 1.5rem; background: #fffbeb; border-bottom: 1px solid #fef3c7;" th:if="${expiryRadar != null and not #lists.isEmpty(expiryRadar.transferRecommendations)}">
+					<h4 style="color: #b45309; font-size: 0.95rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+						<i class="fa-solid fa-lightbulb"></i> MediPulse Inter-Ward Waste Mitigation Advisory:
+					</h4>
+					<div th:each="rec : ${expiryRadar.transferRecommendations}" style="font-size: 0.88rem; color: #78350f; margin-bottom: 0.3rem;">
+						• Transfer <strong><span th:text="${rec.itemName}"></span></strong> (Lot <code><span th:text="${rec.batchNumber}"></span></code>) from <em><span th:text="${rec.fromDepartment}"></span></em> to <strong><span th:text="${rec.toDepartment}"></span></strong> — <span th:text="${rec.reason}"></span>
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="admin-table">
 						<thead>
 							<tr>
-								<th>Tenant ID</th>
-								<th>Client Organization / Name</th>
-								<th>Corporate Email</th>
-								<th>Contact Phone</th>
-								<th>Actions</th>
+								<th>Batch Lot</th>
+								<th>Consumable / Item</th>
+								<th>Ward / Location</th>
+								<th>Current Units</th>
+								<th>Expiry Date</th>
+								<th>Days Left</th>
+								<th>Capital at Risk</th>
+								<th>FEFO Status</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="user : ${users}">
-								<td><span class="pill-id" th:text="'#CLI-' + ${user.u_id}">#1</span></td>
-								<td><strong th:text="${user.uname}">Name</strong></td>
-								<td th:text="${user.uemail}">Email</td>
-								<td th:text="${user.unumber}">Number</td>
+							<tr th:each="b : ${batches}" th:if="${b.daysToExpiry <= 60}">
+								<td><code style="font-weight: 700; color: #0f172a;" th:text="${b.batchNumber}">MERO-2026-B88</code></td>
+								<td><strong th:text="${b.product != null ? b.product.pname : 'Consumable'}">Meropenem 1g</strong></td>
+								<td><span class="pill-role role-user" th:text="${b.department != null ? b.department.deptName : 'Central Pharmacy'}">ICU</span></td>
+								<td><strong th:text="${b.currentQuantity}">42</strong> units</td>
+								<td th:text="${b.expiryDate}">2026-09-20</td>
 								<td>
-									<div class="action-buttons">
-										<a th:href="@{'/updateUser/' + ${user.u_id}}" class="btn-action-edit" title="Edit Client">
-											<i class="fa-solid fa-pen-to-square"></i>
-										</a>
-										<a th:href="@{'/deleteUser/' + ${user.u_id}}" class="btn-action-delete" title="Delete Client" onclick="return confirm('Remove this client account?');">
-											<i class="fa-solid fa-trash"></i>
-										</a>
-									</div>
+									<span th:if="${b.daysToExpiry <= 30}" style="background: #fee2e2; color: #dc2626; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 9999px;" th:text="${b.daysToExpiry} + ' days'">18 days</span>
+									<span th:if="${b.daysToExpiry > 30 and b.daysToExpiry <= 60}" style="background: #fef3c7; color: #d97706; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 9999px;" th:text="${b.daysToExpiry} + ' days'">45 days</span>
+								</td>
+								<td style="font-weight: 700; color: #ef4444;" th:text="'₹ ' + ${#numbers.formatDecimal(b.capitalAtRisk, 1, 2)}">₹ 35,700.00</td>
+								<td>
+									<span class="pill-role" style="background: #fee2e2; color: #b91c1c;" th:if="${b.daysToExpiry <= 30}">PRIORITY FEFO</span>
+									<span class="pill-role" style="background: #fef3c7; color: #b45309;" th:if="${b.daysToExpiry > 30}">EXPIRY WATCH</span>
+								</td>
+								<td>
+									<button type="button" class="btn-action-edit" title="Inter-Ward Transfer"
+											th:data-id="${b.id}" th:data-batch="${b.batchNumber}" th:data-qty="${b.currentQuantity}"
+											onclick="openTransferModal(this.getAttribute('data-id'), this.getAttribute('data-batch'), this.getAttribute('data-qty'))">
+										<i class="fa-solid fa-right-left"></i> Transfer
+									</button>
 								</td>
 							</tr>
-							<tr th:if="${#lists.isEmpty(users)}">
-								<td colspan="5" class="empty-row">No client accounts found.</td>
+							<tr th:if="${#lists.isEmpty(batches)}">
+								<td colspan="9" class="empty-row">No batches recorded.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -138,188 +172,378 @@
 			</div>
 		</div>
 
-		<!-- SECTION: Products / Software Modules -->
+		<!-- SECTION 2: Stockout & ROP Alerts -->
+		<div id="stockout-section" class="admin-section">
+			<div class="section-card" style="border-top: 4px solid #f59e0b;">
+				<div class="section-card-header">
+					<h3 class="section-title">
+						<i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i>
+						Reorder Point (ROP) Breaches & Stockout Diagnostics
+					</h3>
+					<span style="font-size: 0.85rem; color: #64748b;">Formula: ROP = (d × L) + Safety Stock</span>
+				</div>
+
+				<div class="table-responsive">
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>Consumable Item</th>
+								<th>Category</th>
+								<th>Current Stock</th>
+								<th>Reorder Point (ROP)</th>
+								<th>Safety Stock Buffer</th>
+								<th>Suggested EOQ Order</th>
+								<th>Urgency Level</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="alert : ${stockoutAlerts}">
+								<td><strong th:text="${alert.productName}">Sevoflurane</strong></td>
+								<td th:text="${alert.category}">Anesthesia</td>
+								<td><span style="color: #dc2626; font-weight: 800;" th:text="${alert.currentStock} + ' units'">12 units</span></td>
+								<td th:text="${alert.reorderPoint} + ' units'">15 units</td>
+								<td th:text="${alert.safetyStock} + ' units'">8 units</td>
+								<td><strong style="color: #0284c7;" th:text="${alert.suggestedOrderQty} + ' units'">25 units</strong></td>
+								<td>
+									<span class="pill-role" style="background: #fee2e2; color: #b91c1c;" th:text="${alert.urgency}">CODE_RED_CRITICAL</span>
+								</td>
+								<td>
+									<a href="/login" class="btn-add-new" style="background: #0284c7; padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+										<i class="fa-solid fa-cart-plus"></i> Trigger RFQ
+									</a>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(stockoutAlerts)}">
+								<td colspan="8" class="empty-row" style="color: #10b981; font-weight: 600;">
+									<i class="fa-solid fa-circle-check"></i> All hospital consumables are healthy and above their safety buffers.
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION 3: All Batch Lots -->
+		<div id="batches-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-barcode"></i> Master Lot & GS1-128 Batch Registry</h3>
+					<button type="button" class="btn-add-new" onclick="document.getElementById('addBatchModal').style.display='block'" style="background: #0284c7;">
+						<i class="fa-solid fa-plus"></i> Register New Batch
+					</button>
+				</div>
+
+				<div class="table-responsive">
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>Batch Lot</th>
+								<th>Barcode GTIN</th>
+								<th>Consumable</th>
+								<th>Department</th>
+								<th>Quantity</th>
+								<th>Expiry Date</th>
+								<th>Days Left</th>
+								<th>Unit Cost</th>
+								<th>Total Value</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="b : ${batches}">
+								<td><code style="font-weight: 700; color: #0f172a;" th:text="${b.batchNumber}">MERO-2026-B88</code></td>
+								<td style="font-size: 0.75rem; color: #64748b;" th:text="${b.barcodeGtin}">010890...</td>
+								<td><strong th:text="${b.product != null ? b.product.pname : 'Consumable'}">Meropenem</strong></td>
+								<td th:text="${b.department != null ? b.department.deptName : 'Central Pharmacy'}">ICU</td>
+								<td><strong th:text="${b.currentQuantity}">42</strong> / <span th:text="${b.initialQuantity}">100</span></td>
+								<td th:text="${b.expiryDate}">2026-09-20</td>
+								<td>
+									<span th:text="${b.daysToExpiry} + ' days'">18 days</span>
+								</td>
+								<td th:text="'₹ ' + ${b.purchaseCost}">₹ 850.00</td>
+								<td style="font-weight: 700;" th:text="'₹ ' + ${#numbers.formatDecimal(b.capitalAtRisk, 1, 2)}">₹ 35,700.00</td>
+								<td>
+									<span class="pill-role role-admin" th:if="${b.daysToExpiry > 60}">ACTIVE</span>
+									<span class="pill-role" style="background: #fef3c7; color: #b45309;" th:if="${b.daysToExpiry > 30 and b.daysToExpiry <= 60}">NEAR EXPIRY</span>
+									<span class="pill-role" style="background: #fee2e2; color: #b91c1c;" th:if="${b.daysToExpiry <= 30}">CRITICAL</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION 4: Ward Requisitions -->
+		<div id="requisitions-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-file-medical"></i> Clinical Requisitions & Ward Indents</h3>
+				</div>
+
+				<div class="table-responsive">
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>Requisition #</th>
+								<th>Requesting Department</th>
+								<th>Requested By</th>
+								<th>Urgency</th>
+								<th>Estimated Value</th>
+								<th>Status</th>
+								<th>Clinical Notes</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="r : ${requisitions}">
+								<td><strong th:text="${r.requisitionNumber}">REQ-2026-0902</strong></td>
+								<td th:text="${r.department != null ? r.department.deptName : 'Emergency'}">Emergency OT</td>
+								<td th:text="${r.requestedBy}">Nurse Rekha</td>
+								<td>
+									<span class="pill-role" style="background: #fee2e2; color: #b91c1c;" th:if="${r.urgency == 'URGENT_24H' or r.urgency == 'CODE_RED_CRITICAL'}" th:text="${r.urgency}">URGENT</span>
+									<span class="pill-role role-user" th:if="${r.urgency != 'URGENT_24H' and r.urgency != 'CODE_RED_CRITICAL'}" th:text="${r.urgency}">ROUTINE</span>
+								</td>
+								<td style="font-weight: 700;" th:text="'₹ ' + ${r.totalEstimatedCost}">₹ 12,750.00</td>
+								<td>
+									<span class="pill-role" style="background: #dbeafe; color: #1e40af;" th:text="${r.status}">PENDING_PHARMACY</span>
+								</td>
+								<td style="font-size: 0.85rem; color: #475569;" th:text="${r.notes}">Trauma OT replenishment</td>
+								<td>
+									<button type="button" class="btn-action-edit" title="Approve Indent"
+											th:data-id="${r.id}" onclick="approveRequisition(this.getAttribute('data-id'))">
+										<i class="fa-solid fa-check"></i> Approve
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(requisitions)}">
+								<td colspan="8" class="empty-row">No requisitions currently pending.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION 5: Hospital Departments -->
+		<div id="departments-section" class="admin-section">
+			<div class="section-card">
+				<div class="section-card-header">
+					<h3 class="section-title"><i class="fa-solid fa-hospital-user"></i> Hospital Departments & Clinical Wards</h3>
+				</div>
+
+				<div class="table-responsive">
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>Ward Code</th>
+								<th>Department Name</th>
+								<th>Head of Department</th>
+								<th>Bed Capacity</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="d : ${departments}">
+								<td><code style="font-weight: 700; color: #0284c7;" th:text="${d.deptCode}">ICU-MAIN</code></td>
+								<td><strong th:text="${d.deptName}">Intensive Care Unit</strong></td>
+								<td th:text="${d.headOfDept}">Dr. Priya Deshmukh</td>
+								<td><span th:text="${d.bedCapacity} + ' Beds'">45 Beds</span></td>
+								<td style="color: #64748b;" th:text="${d.floorLocation}">Floor 2, Critical Wing</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECTION 6: Master Formulary -->
 		<div id="products-section" class="admin-section">
 			<div class="section-card">
 				<div class="section-card-header">
-					<h3 class="section-title"><i class="fa-solid fa-cubes"></i> Software Suites & Modules</h3>
-					<a th:href="@{'/addProduct'}" class="btn-add-new">
-						<i class="fa-solid fa-plus"></i> Add Software Module
+					<h3 class="section-title"><i class="fa-solid fa-pills"></i> Master Medical Formulary Catalog</h3>
+					<a th:href="@{'/addProduct'}" class="btn-add-new" style="background: #0284c7;">
+						<i class="fa-solid fa-plus"></i> Add Formulary Item
 					</a>
 				</div>
-				<div class="data-table-wrapper">
-					<table class="data-table">
+
+				<div class="table-responsive">
+					<table class="admin-table">
 						<thead>
 							<tr>
-								<th>Module ID</th>
-								<th>Software Suite Title</th>
-								<th>Seat Price (INR)</th>
+								<th>PID</th>
+								<th>Generic / Consumable Name</th>
+								<th>Category</th>
+								<th>Dosage Form</th>
+								<th>Storage Temp</th>
+								<th>Safety Stock</th>
+								<th>ROP</th>
+								<th>Unit Price</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="product : ${products}">
-								<td><span class="pill-id" th:text="'#MOD-' + ${product.pid}">#1</span></td>
-								<td><strong th:text="${product.pname}">Product Name</strong></td>
-								<td><span class="pill-price" th:text="'₹ ' + ${product.pprice}">₹ 450</span></td>
+								<td><span class="pill-id" th:text="'#MED-' + ${product.pid}">#1</span></td>
+								<td><strong th:text="${product.pname}">Meropenem</strong></td>
+								<td><span class="pill-role role-admin" th:text="${product.category}">Antibiotic</span></td>
+								<td th:text="${product.dosageForm}">Vial</td>
+								<td style="font-size: 0.85rem;" th:text="${product.storageTemp}">2°C - 8°C</td>
+								<td th:text="${product.minSafetyStock}">20</td>
+								<td><strong th:text="${product.reorderPoint}">50</strong></td>
+								<td style="font-weight: 700;" th:text="'₹ ' + ${product.pprice}">₹ 850.00</td>
 								<td>
 									<div class="action-buttons">
-										<a th:href="@{'/updateProduct/' + ${product.pid}}" class="btn-action-edit" title="Edit Module">
+										<a th:href="@{'/product/updatingProduct/' + ${product.pid}}" class="btn-action-edit" title="Edit Item">
 											<i class="fa-solid fa-pen-to-square"></i>
 										</a>
-										<a th:href="@{'/deleteProduct/' + ${product.pid}}" class="btn-action-delete" title="Delete Module" onclick="return confirm('Remove this software module from catalog?');">
+										<a th:href="@{'/deleteProduct/' + ${product.pid}}" class="btn-action-delete" title="Delete Item" onclick="return confirm('Remove this consumable from formulary?');">
 											<i class="fa-solid fa-trash"></i>
 										</a>
 									</div>
 								</td>
 							</tr>
-							<tr th:if="${#lists.isEmpty(products)}">
-								<td colspan="4" class="empty-row">No software modules in catalog. Click "Add Software Module" to create one.</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 
-		<!-- SECTION: Orders / Invoices -->
-		<div id="orders-section" class="admin-section">
-			<div class="section-card">
-				<div class="section-card-header">
-					<h3 class="section-title"><i class="fa-solid fa-file-invoice-dollar"></i> License Subscriptions & Invoices</h3>
-				</div>
-				<div class="data-table-wrapper">
-					<table class="data-table">
-						<thead>
-							<tr>
-								<th>Client</th>
-								<th>Corporate Email</th>
-								<th>Software Module</th>
-								<th>Seat Price</th>
-								<th>Seats Allocated</th>
-								<th>Total Invoiced</th>
-								<th>Provision Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="order : ${orders}">
-								<td><strong th:text="${order.user != null ? order.user.uname : 'Enterprise Guest'}">User</strong></td>
-								<td th:text="${order.user != null ? order.user.uemail : '-'}">Email</td>
-								<td><span style="font-weight: 600;" th:text="${order.oName}">Product</span></td>
-								<td th:text="'₹ ' + ${order.oPrice}">₹ 400</td>
-								<td th:text="${order.oQuantity} + ' Seats'">1 Seats</td>
-								<td><span class="pill-total" th:text="'₹ ' + ${order.totalAmmout}">₹ 400</span></td>
-								<td style="color: #64748b; font-size: 0.85rem;" th:text="${order.orderDate}">Date</td>
-							</tr>
-							<tr th:if="${#lists.isEmpty(orders)}">
-								<td colspan="7" class="empty-row">No active software license subscriptions recorded.</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-		<!-- SECTION: DevOps Admins -->
-		<div id="admins-section" class="admin-section">
-			<div class="section-card">
-				<div class="section-card-header">
-					<h3 class="section-title"><i class="fa-solid fa-user-shield"></i> Cloud DevOps Administrators</h3>
-					<a th:href="@{'/addAdmin'}" class="btn-add-new">
-						<i class="fa-solid fa-plus"></i> Add Admin
-					</a>
-				</div>
-				<div class="data-table-wrapper">
-					<table class="data-table">
-						<thead>
-							<tr>
-								<th>Admin ID</th>
-								<th>Admin Name</th>
-								<th>Admin Email</th>
-								<th>Contact Phone</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="admin : ${admins}">
-								<td><span class="pill-id" th:text="'#ADM-' + ${admin.adminId}">#1</span></td>
-								<td><strong th:text="${admin.adminName}">Admin Name</strong></td>
-								<td th:text="${admin.adminEmail}">Email</td>
-								<td th:text="${admin.adminNumber}">Number</td>
-								<td>
-									<div class="action-buttons">
-										<a th:href="@{'/updateAdmin/' + ${admin.adminId}}" class="btn-action-edit" title="Edit Admin">
-											<i class="fa-solid fa-pen-to-square"></i>
-										</a>
-										<a th:href="@{'/deleteAdmin/' + ${admin.adminId}}" class="btn-action-delete" title="Delete Admin" onclick="return confirm('Revoke this admin access?');">
-											<i class="fa-solid fa-trash"></i>
-										</a>
-									</div>
-								</td>
-							</tr>
-							<tr th:if="${#lists.isEmpty(admins)}">
-								<td colspan="5" class="empty-row">No administrators registered.</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-		<!-- SECTION: NexusAI Predictive Intelligence -->
+		<!-- SECTION 7: MediPulse AI Copilot -->
 		<div id="ai-section" class="admin-section">
-			<div class="section-card" style="border: 2px solid #c7d2fe;">
-				<div class="section-card-header" style="background: linear-gradient(135deg, #1e1b4b, #312e81); color: #ffffff;">
+			<div class="section-card" style="border: 2px solid #bae6fd;">
+				<div class="section-card-header" style="background: linear-gradient(135deg, #0369a1, #0284c7); color: #ffffff;">
 					<h3 class="section-title" style="color: #ffffff;">
-						<i class="fa-solid fa-wand-magic-sparkles" style="color: #818cf8;"></i>
-						NexusAI Predictive Intelligence & ARR Forecast
+						<i class="fa-solid fa-wand-magic-sparkles" style="color: #e0f2fe;"></i>
+						MediPulse AI Clinical Copilot & Waste Prevention Intelligence
 					</h3>
-					<button type="button" class="btn-add-new" onclick="loadAiForecast()" style="background: #4f46e5;">
+					<button type="button" class="btn-add-new" onclick="loadAiForecast()" style="background: #0284c7; border: 1px solid #7dd3fc;">
 						<i class="fa-solid fa-arrows-rotate"></i> Refresh Telemetry
 					</button>
 				</div>
 
 				<div style="padding: 2rem;">
 					<div class="stats-grid" style="margin-bottom: 2rem;">
-						<div class="stat-card" style="border-left: 4px solid #4f46e5;">
+						<div class="stat-card" style="border-left: 4px solid #ef4444;">
 							<div class="stat-info">
-								<h4>Projected 30-Day ARR</h4>
-								<div class="stat-value" id="ai-projected-rev" style="color: #4f46e5;">Calculating...</div>
+								<h4>Capital at Risk (< 60D)</h4>
+								<div class="stat-value" id="ai-capital-risk" style="color: #ef4444;">Calculating...</div>
 							</div>
-							<div class="stat-icon purple"><i class="fa-solid fa-chart-line"></i></div>
+							<div class="stat-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
 						</div>
 
 						<div class="stat-card" style="border-left: 4px solid #10b981;">
 							<div class="stat-info">
-								<h4>Growth Velocity</h4>
-								<div class="stat-value" id="ai-growth-rate" style="color: #10b981;">+0.0%</div>
+								<h4>Zero Stockout Compliance</h4>
+								<div class="stat-value" id="ai-stockout-sla" style="color: #10b981;">99.8%</div>
 							</div>
-							<div class="stat-icon blue"><i class="fa-solid fa-arrow-trend-up"></i></div>
+							<div class="stat-icon green"><i class="fa-solid fa-shield-halved"></i></div>
 						</div>
 
-						<div class="stat-card" style="border-left: 4px solid #f59e0b;">
+						<div class="stat-card" style="border-left: 4px solid #0284c7;">
 							<div class="stat-info">
-								<h4>Top Demand Suite</h4>
-								<div class="stat-value" id="ai-top-module" style="font-size: 1.15rem; color: #b45309; padding-top: 0.5rem;">Analyzing...</div>
+								<h4>Top Burn Rate Drug</h4>
+								<div class="stat-value" id="ai-top-drug" style="font-size: 1.1rem; color: #0369a1; padding-top: 0.5rem;">Analyzing...</div>
 							</div>
-							<div class="stat-icon cyan"><i class="fa-solid fa-fire"></i></div>
+							<div class="stat-icon blue"><i class="fa-solid fa-fire"></i></div>
 						</div>
 					</div>
 
 					<h4 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-						<i class="fa-solid fa-lightbulb" style="color: #eab308;"></i> Machine-Generated Strategic Recommendations:
+						<i class="fa-solid fa-stethoscope" style="color: #0284c7;"></i> Clinical & Procurement Recommendations:
 					</h4>
 
 					<div id="ai-recommendations-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
-						<!-- Recommendations injected by JS -->
-						<div style="padding: 1rem 1.25rem; background: #eff6ff; border-radius: 12px; border: 1px solid #bfdbfe; color: #1e40af;">
-							<i class="fa-solid fa-circle-notch fa-spin"></i> Initializing Neural Telemetry Nodes...
+						<div style="padding: 1rem 1.25rem; background: #f0f9ff; border-radius: 12px; border: 1px solid #bae6fd; color: #0369a1;">
+							<i class="fa-solid fa-circle-notch fa-spin"></i> Initializing Clinical Telemetry...
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+
+	<!-- Inter-Ward Transfer Modal -->
+	<div id="transferModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);">
+		<div style="background:white; max-width:480px; margin:10% auto; padding:2rem; border-radius:16px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);">
+			<h3 style="margin-top:0; color:#0f172a; display:flex; align-items:center; gap:0.5rem;">
+				<i class="fa-solid fa-right-left" style="color:#0284c7;"></i> Inter-Ward Stock Transfer
+			</h3>
+			<p style="color:#64748b; font-size:0.9rem;">Re-allocate near-expiry units to a high-burn department to eliminate waste.</p>
+			
+			<form id="transferForm" onsubmit="submitTransfer(event)">
+				<input type="hidden" id="transBatchId" />
+				<div style="margin-bottom:1rem;">
+					<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Batch Lot:</label>
+					<input type="text" id="transBatchNum" readonly style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px; background:#f1f5f9;" />
+				</div>
+				<div style="margin-bottom:1rem;">
+					<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Transfer Quantity:</label>
+					<input type="number" id="transQuantity" min="1" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;" />
+				</div>
+				<div style="margin-bottom:1.5rem;">
+					<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Destination Ward:</label>
+					<select id="transTargetDept" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;">
+						<option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.deptName} + ' (' + ${d.deptCode} + ')'"></option>
+					</select>
+				</div>
+				<div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+					<button type="button" onclick="document.getElementById('transferModal').style.display='none'" style="padding:0.6rem 1.2rem; border:1px solid #cbd5e1; border-radius:8px; background:white;">Cancel</button>
+					<button type="submit" style="padding:0.6rem 1.2rem; border:none; border-radius:8px; background:#0284c7; color:white; font-weight:600;">Confirm Transfer</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Register Batch Modal -->
+	<div id="addBatchModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);">
+		<div style="background:white; max-width:500px; margin:7% auto; padding:2rem; border-radius:16px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);">
+			<h3 style="margin-top:0; color:#0f172a; display:flex; align-items:center; gap:0.5rem;">
+				<i class="fa-solid fa-barcode" style="color:#0284c7;"></i> Register Inbound Batch Lot
+			</h3>
+			
+			<form id="addBatchForm" onsubmit="submitNewBatch(event)">
+				<div style="margin-bottom:0.8rem;">
+					<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Formulary Consumable:</label>
+					<select id="batchProductId" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;">
+						<option th:each="p : ${products}" th:value="${p.pid}" th:text="${p.pname} + ' (₹ ' + ${p.pprice} + ')'"></option>
+					</select>
+				</div>
+				<div style="margin-bottom:0.8rem;">
+					<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Receiving Department / Ward:</label>
+					<select id="batchDeptId" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;">
+						<option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.deptName}"></option>
+					</select>
+				</div>
+				<div style="display:flex; gap:0.75rem; margin-bottom:0.8rem;">
+					<div style="flex:1;">
+						<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Batch / Lot #:</label>
+						<input type="text" id="batchNumber" placeholder="e.g. MERO-2026-B99" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;" />
+					</div>
+					<div style="flex:1;">
+						<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Expiry Date:</label>
+						<input type="date" id="batchExpiryDate" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;" />
+					</div>
+				</div>
+				<div style="display:flex; gap:0.75rem; margin-bottom:1.2rem;">
+					<div style="flex:1;">
+						<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Quantity Units:</label>
+						<input type="number" id="batchQuantity" min="1" value="50" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;" />
+					</div>
+					<div style="flex:1;">
+						<label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.3rem;">Unit Acquisition Cost (₹):</label>
+						<input type="number" step="0.01" id="batchCost" value="850.00" required style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:8px;" />
+					</div>
+				</div>
+				<div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+					<button type="button" onclick="document.getElementById('addBatchModal').style.display='none'" style="padding:0.6rem 1.2rem; border:1px solid #cbd5e1; border-radius:8px; background:white;">Cancel</button>
+					<button type="submit" style="padding:0.6rem 1.2rem; border:none; border-radius:8px; background:#0284c7; color:white; font-weight:600;">Save Batch</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<script>
 		function showSection(sectionId, btnElement) {
@@ -330,19 +554,79 @@
 			btnElement.classList.add('active');
 		}
 
+		function openTransferModal(batchId, batchNumber, maxQty) {
+			document.getElementById('transBatchId').value = batchId;
+			document.getElementById('transBatchNum').value = batchNumber + ' (Max: ' + maxQty + ' units)';
+			document.getElementById('transQuantity').max = maxQty;
+			document.getElementById('transQuantity').value = Math.min(10, maxQty);
+			document.getElementById('transferModal').style.display = 'block';
+		}
+
+		function submitTransfer(e) {
+			e.preventDefault();
+			const batchId = document.getElementById('transBatchId').value;
+			const targetDepartmentId = document.getElementById('transTargetDept').value;
+			const quantity = document.getElementById('transQuantity').value;
+
+			fetch('/api/hospital/transfer', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ batchId, targetDepartmentId, quantity })
+			})
+			.then(res => res.json())
+			.then(data => {
+				alert(data.message);
+				if (data.success) location.reload();
+			})
+			.catch(err => alert('Transfer failed: ' + err));
+		}
+
+		function submitNewBatch(e) {
+			e.preventDefault();
+			const productId = document.getElementById('batchProductId').value;
+			const departmentId = document.getElementById('batchDeptId').value;
+			const batchNumber = document.getElementById('batchNumber').value;
+			const expiryDate = document.getElementById('batchExpiryDate').value;
+			const quantity = document.getElementById('batchQuantity').value;
+			const purchaseCost = document.getElementById('batchCost').value;
+
+			fetch('/api/hospital/batch/add', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ productId, departmentId, batchNumber, expiryDate, quantity, purchaseCost })
+			})
+			.then(res => res.json())
+			.then(data => {
+				alert(data.message);
+				if (data.success) location.reload();
+			})
+			.catch(err => alert('Registration failed: ' + err));
+		}
+
+		function approveRequisition(id) {
+			if (!confirm('Approve this ward requisition for immediate Central Pharmacy dispatch?')) return;
+			fetch('/api/hospital/requisition/' + id + '/approve', { method: 'POST' })
+				.then(res => res.json())
+				.then(data => {
+					alert(data.message);
+					location.reload();
+				})
+				.catch(err => alert('Approval failed: ' + err));
+		}
+
 		function loadAiForecast() {
 			fetch('/api/ai/insights')
 				.then(res => res.json())
 				.then(data => {
-					document.getElementById('ai-projected-rev').innerText = data.projectedMonthlyRevenue || '₹ 0.00';
-					document.getElementById('ai-growth-rate').innerText = data.estimatedGrowthPercent || '+0.0%';
-					document.getElementById('ai-top-module').innerText = data.topTrendingModule || 'General Suites';
+					document.getElementById('ai-capital-risk').innerText = data.capitalAtRisk || '₹ 0.00';
+					document.getElementById('ai-stockout-sla').innerText = data.zeroStockoutSla || '99.8%';
+					document.getElementById('ai-top-drug').innerText = data.topTrendingConsumable || 'Meropenem 1g';
 
 					const listContainer = document.getElementById('ai-recommendations-list');
 					if (data.recommendations && data.recommendations.length > 0) {
 						listContainer.innerHTML = data.recommendations.map(r => `
 							<div style="padding: 1rem 1.25rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; color: #334155; font-size: 0.95rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 0.75rem;">
-								<i class="fa-solid fa-robot" style="color: #6366f1; margin-top: 0.2rem; font-size: 1.1rem;"></i>
+								<i class="fa-solid fa-stethoscope" style="color: #0284c7; margin-top: 0.2rem; font-size: 1.1rem;"></i>
 								<div>${r.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
 							</div>
 						`).join('');

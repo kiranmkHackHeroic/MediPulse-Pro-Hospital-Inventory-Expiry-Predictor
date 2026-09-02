@@ -2,19 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
 	// Inject AI Widget HTML if not already present
 	if (!document.getElementById("ai-chat-window")) {
 		const widgetHtml = `
-			<button id="ai-widget-launcher" class="ai-widget-launcher" title="Chat with NexusAI Copilot">
+			<button id="ai-widget-launcher" class="ai-widget-launcher" style="background: linear-gradient(135deg, #0284c7, #0369a1);" title="Chat with MediPulse AI Clinical Copilot">
 				<div class="pulse-ring"></div>
-				<i class="fa-solid fa-wand-magic-sparkles"></i>
+				<i class="fa-solid fa-heart-pulse"></i>
 			</button>
 
 			<div id="ai-chat-window" class="ai-chat-window">
-				<div class="ai-chat-header">
+				<div class="ai-chat-header" style="background: linear-gradient(135deg, #0369a1, #0284c7);">
 					<div class="ai-header-info">
-						<div class="ai-avatar"><i class="fa-solid fa-brain"></i></div>
+						<div class="ai-avatar"><i class="fa-solid fa-stethoscope"></i></div>
 						<div>
-							<div class="ai-title">NexusAI Copilot</div>
+							<div class="ai-title">MediPulse AI Clinical Copilot</div>
 							<div class="ai-status">
-								<span class="ai-status-dot"></span> Online & Intelligent
+								<span class="ai-status-dot"></span> Online & GxP Compliant
 							</div>
 						</div>
 					</div>
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
 				</div>
 
 				<div class="ai-chat-footer">
-					<input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Ask AI about suites, seats, prices..." autocomplete="off">
-					<button id="ai-send-btn" class="ai-send-btn" title="Send message">
+					<input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Ask about batches, ROP, expiry, EOQ..." autocomplete="off">
+					<button id="ai-send-btn" class="ai-send-btn" style="background: #0284c7;" title="Send message">
 						<i class="fa-solid fa-paper-plane"></i>
 					</button>
 				</div>

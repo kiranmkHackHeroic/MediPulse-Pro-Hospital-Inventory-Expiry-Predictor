@@ -3,37 +3,92 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin : Add Software Suite</title>
+	<title>MediPulse Pro : Add Formulary Medicine / Consumable</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/Add_Product.css}" />
 </head>
 
 <body>
 	<div class="form-modal-card">
-		<div class="form-modal-header">
-			<div class="form-modal-icon"><i class="fa-solid fa-cube"></i></div>
-			<h2 class="form-modal-title">Add Software Suite</h2>
+		<div class="form-modal-header" style="background: linear-gradient(135deg, #0c4a6e, #0284c7);">
+			<div class="form-modal-icon" style="background: rgba(255, 255, 255, 0.2);"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+			<h2 class="form-modal-title" style="font-family: 'Outfit', sans-serif;">Add Formulary Consumable / Medicine</h2>
 		</div>
 
 		<div class="form-modal-body">
-			<form th:action="@{/product/adding}" method="post">
+			<form th:action="@{/addingProduct}" method="post">
 				<div class="form-group">
-					<label>Software Module / Suite Name</label>
-					<input type="text" name="pname" placeholder="e.g. Enterprise Cloud ERP, AI Vision API" required />
+					<label>Trade / Brand Name</label>
+					<input type="text" name="pname" placeholder="e.g. Meropenem 1g IV Infusion, Propofol 1% 20ml" required />
 				</div>
 
 				<div class="form-group">
-					<label>Price per User Seat / License (INR)</label>
-					<input type="number" step="0.01" name="pprice" placeholder="e.g. 4999.00" required />
+					<label>Generic / Active Chemical Formulation</label>
+					<input type="text" name="genericName" placeholder="e.g. Meropenem Trihydrate, Propofol Lipuro" required />
+				</div>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+					<div class="form-group">
+						<label>Clinical Category</label>
+						<select name="category" required style="width: 100%; padding: 0.8rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 0.95rem;">
+							<option value="Critical Care Antibiotics">Critical Care Antibiotics</option>
+							<option value="Surgical Implants">Surgical Implants</option>
+							<option value="Anesthesia & Sedatives">Anesthesia & Sedatives</option>
+							<option value="Cardiovascular Acute">Cardiovascular Acute</option>
+							<option value="Trauma Consumables">Trauma Consumables</option>
+							<option value="Oncology Biologicals">Oncology Biologicals</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Dosage Form</label>
+						<input type="text" name="dosageForm" placeholder="e.g. Vial, Lyophilized, Pre-filled Syringe" required />
+					</div>
+				</div>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+					<div class="form-group">
+						<label>Storage Temperature / Cold-Chain</label>
+						<select name="storageTemp" required style="width: 100%; padding: 0.8rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 0.95rem;">
+							<option value="2°C - 8°C Cold Chain">2°C - 8°C Cold Chain</option>
+							<option value="Ambient (15°C - 25°C)">Ambient (15°C - 25°C)</option>
+							<option value="Deep Freeze (-20°C)">Deep Freeze (-20°C)</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Unit Acquisition Cost (INR)</label>
+						<input type="number" step="0.01" name="pprice" placeholder="e.g. 850.00" required />
+					</div>
+				</div>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
+					<div class="form-group">
+						<label>Min Safety Stock</label>
+						<input type="number" name="minSafetyStock" placeholder="25" required />
+					</div>
+					<div class="form-group">
+						<label>Reorder Point (ROP)</label>
+						<input type="number" name="reorderPoint" placeholder="50" required />
+					</div>
+					<div class="form-group">
+						<label>Lead Time (Days)</label>
+						<input type="number" name="leadTimeDays" placeholder="3" required />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Est. Daily Hospital Burn Rate (Units/Day)</label>
+					<input type="number" step="0.1" name="dailyBurnRate" placeholder="e.g. 8.5" required />
 				</div>
 
 				<div class="btn-group">
 					<a th:href="@{/admin/services}" class="btn-cancel-form">Cancel</a>
-					<button type="submit" class="btn-submit-form">
-						<i class="fa-solid fa-plus"></i> Publish Module
+					<button type="submit" class="btn-submit-form" style="background: linear-gradient(135deg, #0284c7, #0d9488);">
+						<i class="fa-solid fa-plus"></i> Enlist into Formulary
 					</button>
 				</div>
 			</form>

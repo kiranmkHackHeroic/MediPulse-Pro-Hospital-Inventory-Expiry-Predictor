@@ -1,17 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-	--primary: #2563eb;
-	--primary-hover: #1d4ed8;
-	--primary-dark: #1e3a8a;
-	--accent: #6366f1;
+	--primary: #0284c7;
+	--primary-hover: #0369a1;
+	--primary-dark: #075985;
+	--accent: #0d9488;
 	--accent-cyan: #06b6d4;
+	--accent-emerald: #10b981;
 	--bg-dark: #0f172a;
 	--text-main: #0f172a;
-	--text-muted: #64748b;
+	--text-muted: #475569;
 	--bg-light: #f8fafc;
+	--bg-hospital: #f0fdfa;
 	--white: #ffffff;
-	--card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+	--card-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08), 0 8px 10px -6px rgba(13, 148, 136, 0.04);
 	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -77,7 +79,8 @@ body {
 }
 
 .brand-name {
-	font-size: 1.3rem;
+	font-family: 'Outfit', sans-serif;
+	font-size: 1.4rem;
 	font-weight: 800;
 	color: #0f172a;
 	letter-spacing: -0.5px;
@@ -85,9 +88,9 @@ body {
 }
 
 .brand-name span {
-	background: linear-gradient(135deg, #2563eb, #6366f1);
+	color: #0284c7;
+	background: linear-gradient(135deg, #0284c7, #0d9488);
 	-webkit-background-clip: text;
-	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
