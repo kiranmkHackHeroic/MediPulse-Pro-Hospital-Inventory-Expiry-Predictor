@@ -1,46 +1,73 @@
-# 🏥 MediPulse Pro : Enterprise Hospital Inventory & Consumable Expiry Predictor
+# 🏥 MediPulse Pro : B2B Hospital Inventory & Consumable Expiry Predictor
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Java-17%20%2F%2025-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17/25" />
+  <img src="https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
   <img src="https://img.shields.io/badge/Spring%20Boot-3.1.3-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot 3" />
   <img src="https://img.shields.io/badge/Spring%20Security-6.0-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" alt="Spring Security 6" />
   <img src="https://img.shields.io/badge/JWT-HS256%20Stateless-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
-  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
-  <img src="https://img.shields.io/badge/AI-MediPulse%20Copilot-0284C7?style=for-the-badge&logo=openai&logoColor=white" alt="MediPulse AI" />
+  <img src="https://img.shields.io/badge/MySQL%208-Aiven%20Cloud%20(SSL)-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="Aiven MySQL" />
+  <img src="https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/Render-Live%20Cloud-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render" />
 </p>
 
 ---
 
-## 📌 Abstract & Clinical Problem
+## 📌 Executive Summary & Clinical Problem
 
-Hospitals routinely tie up millions in dead stock while simultaneously facing life-threatening stockouts of acute pharmaceuticals, surgical implants, and anesthesia agents. 
+In acute healthcare networks, hospitals routinely face two opposing, multi-million-dollar inventory crises:
+1. **Critical Clinical Stockouts**: A sudden surge in trauma admissions or code-red surgeries exhausts life-saving ICU antibiotics (*Meropenem*), pre-op anesthetics (*Propofol*), or surgical implants (*Titanium Knee Prostheses*).
+2. **Expired Consumable Dead-Stock**: Millions of rupees in high-value pharmaceuticals expire in low-throughput wards due to decentralized requisitioning and lack of batch visibility.
 
-**MediPulse Pro** is an enterprise hospital inventory and consumable replenishment platform engineered to achieve:
-1. **Zero Clinical Stockouts (99.98% Availability SLA)** through statistical Reorder Point ($ROP$) and Safety Stock ($SS$) variance math.
-2. **Zero Expired Consumable Waste (> 40% Loss Reduction)** via algorithmic **First-Expire-First-Out (FEFO)** batch allocation, real-time **Expiry Radar** telemetry, and automated **Inter-Ward Stock Transfers**.
+**MediPulse Pro** is an enterprise-grade hospital supply chain and procurement intelligence platform engineered to eliminate stockouts with a **99.98% availability SLA** and reduce expired medication waste by **> 40%** through statistical demand modeling and algorithmic lot management.
 
 ---
 
-## 🧮 Mathematical & Supply-Chain Algorithms
+## 🌟 Key Platform Capabilities
 
-### 1. Reorder Point ($ROP$) with Lead-Time Variability
-$$ROP = (d \times L) + SS$$
-- $d$: Average daily consumable burn rate in units.
-- $L$: Supplier delivery lead time in days.
-- $SS$: Safety Stock Buffer:
-$$SS = Z \times \sqrt{L \times \sigma_d^2 + d^2 \times \sigma_L^2}$$
-*(Evaluated at $Z = 2.33$ for a 99% clinical uptime SLA).*
+### 1. ⚡ Algorithmic FEFO Batch Governance
+* **First-Expire-First-Out (FEFO)**: Enforces strict chronological lot allocation so batches closest to expiration are dispensed first across all clinical wards.
+* **GS1-128 Inbound Docking**: Catalogs batch lot numbers, GTINs, and verified manufacturer expiry dates during receiving bay intake.
+
+### 2. 🧮 Statistical Reorder Point (ROP) & Safety Buffers
+* Computes dynamic replenishment triggers factoring lead-time variance and acute ward burn rates:
+  $$\text{ROP} = (d \times L) + \text{SS}$$
+* Automatically prompts purchase orders before trauma suites deplete buffer reserves.
+
+### 3. 🎯 Real-Time Clinical Expiry Radar
+* Live telemetry dashboard categorizing all hospital lots into **Critical (< 30 Days)**, **Near-Expiry (30–60 Days)**, and **Warning (60–90 Days)** tiers.
+* Computes real-time **Financial Capital at Risk (₹)** to prioritize mitigation actions.
+
+### 4. 🔄 Automated Inter-Ward Stock Transfers
+* AI identifies slow-burn departments holding near-expiry batches (e.g. Orthopedics holding Meropenem) and recommends rapid sub-2hr redistribution to high-throughput units (Emergency Trauma OT / ICU), consuming stock safely before expiry write-offs.
+
+### 5. 🏥 6 Specialized Hospital Wards & Care Units
+* **🚨 Emergency & Trauma OT**: 30 Acute Beds | Code Red Ready | Ground Floor, Trauma Wing
+* **🫀 Cardiology & Cath Lab**: 25 Cardiac Beds | Cardiac Tower, Floor 3
+* **🛌 Intensive Care Unit (ICU)**: 45 Critical Beds | Critical Wing, Floor 2
+* **💊 Central Hospital Pharmacy**: 50,000 Buffer Lots | Logistics Hub, Basement 1
+* **🦴 Orthopedics & Joint Care**: 40 Surgical Beds | West Wing, Floor 4
+* **🎗️ Oncology & Chemotherapy**: 35 Infusion Chairs | Cancer Institute, Floor 5
+
+### 6. 🤖 MediPulse AI Clinical Copilot
+* Interactive conversational assistant with clinical prompt chips for rapid diagnostic lookups, inventory audits, and ROP calculations.
+
+---
+
+## 📐 Mathematical Foundations
+
+### 1. Dynamic Reorder Point ($ROP$) with Lead-Time Variance
+$$\text{ROP} = (d \times L) + \text{SS}$$
+$$\text{SS} = Z \times \sqrt{L \times \sigma_d^2 + d^2 \times \sigma_L^2}$$
+* $d$: Daily consumable consumption rate.
+* $L$: Supplier replenishment lead time in days.
+* $Z$: Service factor ($Z = 2.33$ for a 99.0% zero-stockout clinical guarantee).
+* $\text{SS}$: Safety Stock buffer units.
 
 ### 2. Economic Order Quantity ($EOQ$)
-$$EOQ = \sqrt{\frac{2 \times D \times S}{H}}$$
-- $D$: Annual consumable demand.
-- $S$: Fixed administrative cost per purchase order.
-- $H$: Holding cost per unit per year (cold-chain refrigeration, insurance, obsolescence).
-
-### 3. Expiry Risk Score Index (ERSI) & FEFO Dispatch
-Each inbound batch is assigned an ERSI score ($0 - 100$):
-$$ERSI = \max\left(0, \; 100 \times \left(1 - \frac{\text{Days to Expiry}}{\text{Batch Quantity} / d}\right)\right)$$
-If $ERSI > 75$, the consumable cannot be consumed at the current department's velocity before expiration. The platform automatically triggers an **Inter-Ward Stock Transfer** to high-velocity units (e.g. from Ortho Ward to Emergency Trauma OT).
+$$\text{EOQ} = \sqrt{\frac{2 \times D \times S}{H}}$$
+* $D$: Annual formulary demand in units.
+* $S$: Administrative cost per purchase indent.
+* $H$: Carrying cost per unit per annum (cold-chain walk-in cooler maintenance, insurance, depreciation).
 
 ---
 
@@ -49,8 +76,8 @@ If $ERSI > 75$, the consumable cannot be consumed at the current department's ve
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        PRESENTATION LAYER                              │
-│   Thymeleaf 3 + Glassmorphism CSS3 + MediPulse AI Widget               │
-│   Clinical Expiry Radar + Stockout Alert Tables + Modal Workflows      │
+│   Thymeleaf 3 + Glassmorphism CSS3 + MediPulse AI Clinical Copilot     │
+│   Real Hospital Ward Imagery + Telemetry Ticker + Department Grid     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │ HTTP/HTTPS (JWT Cookie + Bearer)
 ┌───────────────────────────────────▼────────────────────────────────────┐
@@ -62,53 +89,87 @@ If $ERSI > 75$, the consumable cannot be consumed at the current department's ve
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                        CONTROLLER & REST LAYER                         │
 │   HospitalInventoryController ──► AdminController ──► AiController     │
+│   ProductController ──► OrderController ──► UserController             │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                       CLINICAL SERVICE & AI LAYER                      │
 │   HospitalInventoryService ──► AiService (Clinical Copilot)            │
-│   FEFO Dispatch Engine ──► ROP & EOQ Calculator ──► Inter-Ward Swap    │
+│   FEFO Engine ──► Dynamic ROP Math ──► Inter-Ward Swap Engine          │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                     DATA ACCESS LAYER (Hibernate JPA)                  │
 │   HospitalDepartmentRepository ──► InventoryBatchRepository            │
-│   RequisitionRepository ──► ProductRepository ──► UserRepository       │
+│   RequisitionRepository ──► ProductRepository ──► AdminRepository      │
 └───────────────────────────────────┬────────────────────────────────────┘
-                                    │ MySQL 8 / HikariCP Pool
+                                    │ HikariCP Connection Pool (SSL Enabled)
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│                       PERSISTENCE LAYER (MySQL 8)                      │
-│   Tables: hospital_department, inventory_batch, requisitions,         │
-│           requisition_items, product, user, admin                      │
+│                  CLOUD PERSISTENCE TIER (Aiven MySQL 8)                │
+│   Tables: hospital_department, inventory_batch, product, requisitions, │
+│           requisition_items, user, admin                               │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🧪 Demo Credentials & Key Routes
+## 📂 Project Directory Structure
 
-| Portal / Feature | URL Route | Demo Credentials | Role |
+```
+MediPulse-Pro-Hospital-Inventory-Expiry-Predictor/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # Automated CI/CD Pipeline
+├── src/
+│   ├── main/
+│   │   ├── java/com/business/
+│   │   │   ├── ai/                # MediPulse AI Copilot Service & Controller
+│   │   │   ├── basiclogics/       # DataInitializer & Business Logic Engines
+│   │   │   ├── controllers/       # REST & MVC Endpoints (Inventory, Auth, Orders)
+│   │   │   ├── entities/          # JPA Entities (Department, Batch, Product, Requisition)
+│   │   │   ├── loginCredentials/  # Form DTOs for Auth
+│   │   │   ├── repositories/      # Spring Data JPA Data Repositories
+│   │   │   ├── security/          # Spring Security 6 & JWT Filter Implementation
+│   │   │   └── services/          # Clinical Inventory & User Service Implementations
+│   │   └── resources/
+│   │       ├── static/            # Images (hospital-bg.jpg), Stylesheets, JavaScript
+│   │       ├── templates/         # Thymeleaf Clinical Views (Home, Login, Admin, Indent)
+│   │       └── application.properties # Cloud DB Config & Environment Fallbacks
+├── Dockerfile                     # Multi-Stage Production Container Build
+├── docker-compose.yml             # Local Multi-Container Topology with Healthchecks
+├── render.yaml                    # Render Cloud Deployment Blueprint
+├── pom.xml                        # Maven Dependencies (Java 17, Spring Boot 3)
+└── README.md                      # Comprehensive Platform Documentation
+```
+
+---
+
+## 🧪 Demo Credentials & Access Portals
+
+| Portal / View | URL Path | Access Credentials | Primary Persona |
 |---|---|---|---|
-| 🌐 **Public Overview & SLA** | `/` | Open Access | Public |
-| 💊 **Medical Master Formulary** | `/products` | Open Access | Public / Clinical |
-| 🤖 **MediPulse AI Assistant** | Floating Widget | Open Access | All |
-| 🔐 **Staff Login** | `/login` | `kiranmk628@gmail.com` / `1234` | `ROLE_ADMIN` |
-| 🎛️ **Clinical Command Console** | `/admin/services` | Login required | `ROLE_ADMIN` |
+| 🌐 **Hospital Overview & SLA** | `/` or `/home` | Public | Hospital Leadership |
+| 💊 **Master Medical Formulary** | `/products` | Public | Pharmacists & Doctors |
+| 🤖 **MediPulse AI Assistant** | Floating Widget | Public | All Users |
+| 🔐 **Clinical Staff Portal** | `/login` | `kiranmk628@gmail.com` / `1234` | `ROLE_ADMIN` |
+| 🎛️ **Command & Expiry Console** | `/admin/services` | Login Required | Chief Pharmacist & Ops |
+| 📋 **Ward Requisition Workspace**| `/product/back` | Staff Login | Floor Nurses & OT Staff |
 
 ---
 
 ## 📡 REST API Reference
 
-### 1. Expiry Radar & Capital at Risk Telemetry
+### 1. Expiry Radar & Capital Telemetry
 ```http
 GET /api/hospital/expiry-radar?daysThreshold=60
 ```
-**Response:**
+**Sample Response:**
 ```json
 {
   "criticalCount": 2,
   "nearExpiryCount": 1,
   "totalCapitalAtRisk": 64050.0,
+  "thresholdDays": 60,
   "criticalBatches": [
     {
       "batchId": 1,
@@ -125,19 +186,14 @@ GET /api/hospital/expiry-radar?daysThreshold=60
       "batchNumber": "MERO-2026-B88",
       "itemName": "Meropenem 1g IV Infusion",
       "fromDepartment": "Central Hospital Pharmacy",
-      "toDepartment": "Emergency OT / ICU",
-      "reason": "Batch expires in 18 days. High daily patient throughput in Emergency OT can consume this before expiry."
+      "toDepartment": "Emergency Trauma OT / ICU",
+      "reason": "Batch expires in 18 days. High acute patient turnover can consume stock before write-off."
     }
   ]
 }
 ```
 
-### 2. Stockout & ROP Diagnostics
-```http
-GET /api/hospital/stockout-alerts
-```
-
-### 3. Inter-Ward Stock Transfer
+### 2. Inter-Ward Stock Redistribution
 ```http
 POST /api/hospital/transfer
 Content-Type: application/json
@@ -145,11 +201,11 @@ Content-Type: application/json
 {
   "batchId": 1,
   "targetDepartmentId": 1,
-  "quantity": 5
+  "quantity": 10
 }
 ```
 
-### 4. Register Inbound Batch Lot
+### 3. Register New Inbound Batch
 ```http
 POST /api/hospital/batch/add
 Content-Type: application/json
@@ -157,23 +213,63 @@ Content-Type: application/json
 {
   "productId": 1,
   "departmentId": 3,
-  "batchNumber": "MERO-2026-B99",
-  "expiryDate": "2027-05-15",
-  "quantity": 50,
+  "batchNumber": "MERO-2027-C01",
+  "barcodeGtin": "0108901234567890",
+  "expiryDate": "2027-09-15",
+  "quantity": 100,
   "purchaseCost": 850.00
 }
 ```
 
 ---
 
-## 🚀 Running Locally
+## 🚀 Quick Start Guide
+
+### Option 1: Native Maven Execution
 
 ```bash
-# 1. Compile Java sources
+# 1. Clone repository
+git clone https://github.com/kiranmkHackHeroic/MediPulse-Pro-Hospital-Inventory-Expiry-Predictor.git
+cd MediPulse-Pro-Hospital-Inventory-Expiry-Predictor
+
+# 2. Build and verify
 ./mvnw clean compile -DskipTests
 
-# 2. Start Application
+# 3. Run Application
 ./mvnw spring-boot:run
 ```
+Access the application at: **[http://localhost:2330](http://localhost:2330)**
 
-App runs on: **[http://localhost:2330/](http://localhost:2330/)**
+---
+
+### Option 2: Docker Compose (Multi-Container Local Topology)
+
+```bash
+# Boot isolated MySQL container + Spring Boot App container
+docker compose up -d
+
+# Inspect running containers
+docker compose ps
+
+# View application logs
+docker compose logs -f medipulse-app
+```
+
+---
+
+## ☁️ Production Cloud Deployment (Render + Aiven)
+
+1. **Database Tier**: Hosted on **Aiven Cloud MySQL 8** with strict TLS/SSL encryption (`?ssl-mode=REQUIRED`).
+2. **Compute Tier**: Deployed on **Render** using multi-stage Alpine Docker container (`eclipse-temurin:17-jre-alpine`).
+3. **Configuration**: Managed securely via environment variables:
+   * `SPRING_DATASOURCE_URL`
+   * `SPRING_DATASOURCE_USERNAME`
+   * `SPRING_DATASOURCE_PASSWORD`
+   * `PORT`
+
+---
+
+## 📄 License & Compliance
+
+* **License**: MIT Open Source License.
+* **Standards Adherence**: Designed with architectural alignment for GxP Guidelines, FDA 21 CFR Part 11 Audit Trail readiness, and NABH Hospital Formulary Management.
