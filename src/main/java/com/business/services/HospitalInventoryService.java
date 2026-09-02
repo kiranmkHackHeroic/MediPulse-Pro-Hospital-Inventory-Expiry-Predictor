@@ -13,11 +13,9 @@ import org.springframework.stereotype.Service;
 import com.business.entities.HospitalDepartment;
 import com.business.entities.InventoryBatch;
 import com.business.entities.Product;
-import com.business.entities.Requisition;
 import com.business.repositories.HospitalDepartmentRepository;
 import com.business.repositories.InventoryBatchRepository;
 import com.business.repositories.ProductRepository;
-import com.business.repositories.RequisitionRepository;
 
 @Service
 public class HospitalInventoryService {
@@ -31,16 +29,13 @@ public class HospitalInventoryService {
 	@Autowired
 	private HospitalDepartmentRepository departmentRepository;
 
-	@Autowired
-	private RequisitionRepository requisitionRepository;
-
 	/**
 	 * Compute Expiry Radar metrics: batches expiring within 30, 60, and 90 days,
 	 * along with total financial capital at risk.
 	 */
 	public Map<String, Object> getExpiryRadar(int daysThreshold) {
 		Map<String, Object> radar = new HashMap<>();
-		LocalDate cutoff = LocalDate.now().plusDays(daysThreshold);
+		radar.put("thresholdDays", daysThreshold);
 
 		List<InventoryBatch> allBatches = batchRepository.findAllOrderedByExpiry();
 		List<Map<String, Object>> criticalList = new ArrayList<>();
@@ -208,7 +203,7 @@ public class HospitalInventoryService {
 	/**
 	 * Inter-ward stock transfer execution.
 	 */
-	public boolean transferStock(Long batchId, Long targetDepartmentId, int quantity) {
+	public boolean transferStock(long batchId, long targetDepartmentId, int quantity) {
 		Optional<InventoryBatch> batchOpt = batchRepository.findById(batchId);
 		Optional<HospitalDepartment> targetDeptOpt = departmentRepository.findById(targetDepartmentId);
 

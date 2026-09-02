@@ -70,6 +70,7 @@
 .hero-title span {
 	background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 50%, #67e8f9 100%);
 	-webkit-background-clip: text;
+	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
@@ -217,15 +218,6 @@
 	transform: translateY(-6px);
 	box-shadow: 0 20px 35px -10px rgba(13, 148, 136, 0.12);
 	border-color: #7dd3fc;
-}
-	transition: all 0.3s ease;
-	text-align: left;
-}
-
-.feature-card:hover {
-	transform: translateY(-8px);
-	box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.12);
-	border-color: #93c5fd;
 }
 
 .feature-icon-wrapper {

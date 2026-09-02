@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,7 @@ import org.springframework.stereotype.Service;
 import com.business.entities.InventoryBatch;
 import com.business.entities.Product;
 import com.business.repositories.InventoryBatchRepository;
-import com.business.repositories.OrderRepository;
 import com.business.repositories.ProductRepository;
-import com.business.repositories.UserRepository;
 import com.business.services.HospitalInventoryService;
 
 @Service
@@ -27,12 +23,6 @@ public class AiService {
 
 	@Autowired
 	private InventoryBatchRepository batchRepository;
-
-	@Autowired
-	private OrderRepository orderRepository;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private HospitalInventoryService inventoryService;
@@ -181,7 +171,10 @@ public class AiService {
 			int eoq = inventoryService.calculateEOQ(matched);
 
 			List<InventoryBatch> batches = batchRepository.findByProductOrderByExpiryDateAsc(matched);
-			int totalStock = batches.stream().mapToInt(InventoryBatch::getCurrentQuantity).sum();
+			int totalStock = 0;
+			for (InventoryBatch b : batches) {
+				totalStock += b.getCurrentQuantity();
+			}
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("### 💊 Consumable Clinical Profile: ").append(matched.getPname()).append("\n\n");
@@ -282,15 +275,5 @@ public class AiService {
 			}
 		}
 		return null;
-	}
-
-	private int extractNumber(String text) {
-		Matcher matcher = Pattern.compile("\\b(\\d{1,4})\\b").matcher(text);
-		if (matcher.find()) {
-			try {
-				return Integer.parseInt(matcher.group(1));
-			} catch (Exception ignored) {}
-		}
-		return -1;
 	}
 }

@@ -100,7 +100,7 @@ public class HospitalInventoryController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			int productId = Integer.parseInt(payload.get("productId").toString());
-			Long deptId = Long.valueOf(payload.get("departmentId").toString());
+			long deptId = Long.parseLong(payload.get("departmentId").toString());
 			String batchNumber = payload.get("batchNumber").toString();
 			String barcodeGtin = payload.getOrDefault("barcodeGtin", "010890" + System.currentTimeMillis()).toString();
 			LocalDate expiryDate = LocalDate.parse(payload.get("expiryDate").toString());
@@ -144,7 +144,7 @@ public class HospitalInventoryController {
 	 * Approve a requisition and mark it for pharmacy dispatch
 	 */
 	@PostMapping("/requisition/{id}/approve")
-	public ResponseEntity<Map<String, Object>> approveRequisition(@PathVariable Long id) {
+	public ResponseEntity<Map<String, Object>> approveRequisition(@PathVariable("id") long id) {
 		Map<String, Object> res = new HashMap<>();
 		Optional<Requisition> reqOpt = requisitionRepository.findById(id);
 		if (reqOpt.isPresent()) {
