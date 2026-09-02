@@ -32,11 +32,81 @@ body {
 	flex-direction: column;
 }
 
+/* Top Hospital Ribbon & GitHub Bar */
+.top-announcement-bar {
+	background: #081420;
+	border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+	padding: 0.45rem 2rem;
+	font-size: 0.82rem;
+	color: #94a3b8;
+	font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.top-bar-inner {
+	max-width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.top-bar-left {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	color: #cbd5e1;
+}
+
+.top-bar-left strong {
+	color: #38bdf8;
+	font-family: 'Outfit', sans-serif;
+	font-weight: 700;
+}
+
+.live-pulse-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #10b981;
+	box-shadow: 0 0 8px #10b981;
+	animation: pulseGreenDot 2s infinite;
+}
+
+@keyframes pulseGreenDot {
+	0% { opacity: 1; transform: scale(1); }
+	50% { opacity: 0.4; transform: scale(1.3); }
+	100% { opacity: 1; transform: scale(1); }
+}
+
+.top-github-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	color: #f1f5f9;
+	text-decoration: none;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	padding: 0.22rem 0.75rem;
+	border-radius: 50px;
+	font-weight: 600;
+	font-size: 0.78rem;
+	transition: all 0.2s ease;
+}
+
+.top-github-link:hover {
+	background: #ffffff;
+	color: #0f172a;
+	border-color: #ffffff;
+	box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
 .navbar-container {
 	position: sticky;
 	top: 0;
 	z-index: 1000;
-	background: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.95);
 	backdrop-filter: blur(16px);
 	-webkit-backdrop-filter: blur(16px);
 	border-bottom: 1px solid rgba(226, 232, 240, 0.8);
@@ -155,6 +225,30 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+}
+
+.btn-nav-github {
+	text-decoration: none;
+	background: #0f172a;
+	color: #ffffff !important;
+	border: 1.5px solid #334155;
+	padding: 0.6rem 1rem;
+	border-radius: 12px;
+	font-weight: 700;
+	font-size: 0.88rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	transition: var(--transition);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-nav-github:hover {
+	background: #1e293b;
+	border-color: #64748b;
+	color: #38bdf8 !important;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .btn-nav-login {

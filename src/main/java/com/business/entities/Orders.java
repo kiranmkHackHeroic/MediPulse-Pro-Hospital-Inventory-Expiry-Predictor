@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 public class Orders
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oId;
 	private String oName;
 	private double oPrice;
