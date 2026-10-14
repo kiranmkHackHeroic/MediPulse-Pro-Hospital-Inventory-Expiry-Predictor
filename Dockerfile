@@ -23,4 +23,4 @@ COPY --from=builder /build/target/*.jar app.jar
 
 # Set Port and entrypoint
 EXPOSE 2330
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx384m", "-Xms128m", "-jar", "app.jar"]

@@ -13,10 +13,15 @@ import com.business.entities.InventoryBatch;
 import com.business.entities.Product;
 import com.business.entities.Requisition;
 import com.business.entities.RequisitionItem;
+import com.business.entities.Admin;
+import com.business.entities.User;
+import com.business.repositories.AdminRepository;
 import com.business.repositories.HospitalDepartmentRepository;
 import com.business.repositories.InventoryBatchRepository;
 import com.business.repositories.ProductRepository;
 import com.business.repositories.RequisitionRepository;
+import com.business.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Component
 public class HospitalDataInitializer implements CommandLineRunner {
@@ -32,6 +37,15 @@ public class HospitalDataInitializer implements CommandLineRunner {
 
 	@Autowired
 	private RequisitionRepository requisitionRepository;
+
+	@Autowired
+	private AdminRepository adminRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -269,6 +283,28 @@ public class HospitalDataInitializer implements CommandLineRunner {
 				requisitionRepository.save(req);
 				System.out.println("✅ Hospital Requisitions initialized.");
 			}
+		}
+
+		// 5. Seed Hospital Admin if empty
+		if (adminRepository.count() == 0) {
+			Admin admin = new Admin();
+			admin.setAdminName("Kiran M K");
+			admin.setAdminEmail("kiranmk628@gmail.com");
+			admin.setAdminNumber("9876543210");
+			admin.setAdminPassword(passwordEncoder.encode("Kiran@123"));
+			adminRepository.save(admin);
+			System.out.println("✅ Hospital Admin seeded: kiranmk628@gmail.com");
+		}
+
+		// 6. Seed Clinical Nurse User if empty
+		if (userRepository.count() == 0) {
+			User user = new User();
+			user.setUname("Nurse Priya");
+			user.setUemail("nurse.priya@hospital.org");
+			user.setUnumber(9876543211L);
+			user.setUpassword(passwordEncoder.encode("Priya@123"));
+			userRepository.save(user);
+			System.out.println("✅ Clinical Nurse User seeded: nurse.priya@hospital.org");
 		}
 	}
 }
